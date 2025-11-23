@@ -23,17 +23,8 @@ export default function Page() {
         pmImg="/images/sections/pm-img.png"
       />
       <main style={{ paddingTop: 24 }}>...</main>
-      {/* <main>
-        <SectionAbout />
-        <SectionVisions />
-        <SectionTimeline />
-        <SectionScrollingImages />
-        <SectionSummit />
-        <SectionExplore />
-        <SectionPartners />
-        <SectionGallery />
-        <Footer />
-      </main> */}
+        <SectionTimeline/>
+        <SectionVisions /> 
     </>
   );
 }
