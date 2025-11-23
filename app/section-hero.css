@@ -115,7 +115,7 @@
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 100px 0;
+  padding: 50px 0;
   box-sizing: border-box;
 }
 
@@ -123,6 +123,14 @@
 .hero-left {
   color: #fff;
   max-width: 720px;
+}
+
+.hero-theme-script {
+  letter-spacing: 2px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 30px;
 }
 
 .hero-tag {
@@ -135,7 +143,7 @@
 
 /* Titles */
 .hero-title {
-  margin: 0 0 18px 0;
+  margin: 0 0 -18px 0;
   line-height: 1.03;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial;
@@ -149,6 +157,7 @@
   font-style: italic;
   margin-bottom: 18px;
 }
+
 .hero-title .big {
   display: block;
   color: #fff;
@@ -159,7 +168,7 @@
 /* date badge */
 .hero-date {
   display: inline-block;
-  margin-top: 18px;
+  margin-top: 8%;
   margin-bottom: 35px;
   background: #2d66f5;
   color: #fff;
@@ -169,41 +178,9 @@
   margin-bottom: 22px;
 }
 
-/* founder card */
-.founder-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 18px;
-  margin-bottom: 42px;
-  /* background: linear-gradient(180deg, #2980b9, #6dd5fa 50%,  #fff); */
-}
-.founder-avatar {
-  width: 68px;
-  height: 68px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 3px solid rgba(255, 255, 255, 0.06);
-}
-.founder-name {
-  font-weight: 800;
-  font-size: 18px;
-  color: #fff;
-}
-.founder-role {
-  display: inline-block;
-  margin-top: 4px;
-  background: rgba(46, 107, 255, 0.12);
-  color: #cfe0ff;
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 12px;
-}
-
 /* quick nav links */
 .hero-links {
-  margin-top: 16px;
+  margin-top: 10%;
   display: flex;
   gap: 16px;
   align-items: center;
