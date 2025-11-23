@@ -16,31 +16,30 @@ const ministerCards = [
     id: 1,
     name: "Shri Gajendra Singh Shekhawat",
     title: "Hon'ble Union Minister of Culture & Tourism | Govt of India",
-    image:
-      "/images/crousel/minister-letters/img-shri-gajendra-singh-shekhawat.png",
-    certificateUrl: "/certificates/cert-1.jpg",
+    image: "/images/crousel/ministers/img-shri-gajendra-singh-shekhawat.png",
+    certificateUrl:
+      "/images/crousel/letters/img-letter-gajendra-singh-shekhawat.png",
   },
   {
     id: 2,
     name: "Shri Bhajan Lal Sharma",
     title: "Hon'ble Chief Minister | Rajasthan",
-    image: "/images/crousel/minister-letters/img-shri-bhajan-lal-sharma.png",
-    certificateUrl: "/certificates/cert-2.jpg",
+    image: "/images/crousel/ministers/img-shri-bhajan-lal-sharma.png",
+    certificateUrl: "/images/crousel/letters/img-letter-bhajan-lal-sharma.png",
   },
   {
     id: 3,
     name: "Shri Jhabar Singh Kharra",
     title: "Hon'ble Minister of State for Urban Housing | Government of India",
-    image: "/images/crousel/minister-letters/img-shri-jhabar-singh-kharra.png",
-    certificateUrl: "/certificates/cert-2.jpg",
+    image: "/images/crousel/ministers/img-shri-jhabar-singh-kharra.png",
+    certificateUrl: "/images/crousel/letters/img-letter-jhabbar-kharra.png",
   },
   {
     id: 4,
     name: "Swami Balmukundacharya Ji Maharaj",
     title: "Hon'ble Member of the Legislative Assembly Rajasthan",
-    image:
-      "/images/crousel/minister-letters/img-swami-balmukundacharya-ji-maharaj.png",
-    certificateUrl: "/certificates/cert-2.jpg",
+    image: "/images/crousel/minister/img-swami-balmukundacharya-ji-maharaj.png",
+    certificateUrl: "/images/crousel/letters/img-letter-balmukundacharya.png",
   },
 ];
 export default function Page() {
