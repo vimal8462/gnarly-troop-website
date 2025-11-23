@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef } from "react";
-
 export default function SectionVisions() {
   const rowRef = useRef<HTMLDivElement | null>(null);
   return (

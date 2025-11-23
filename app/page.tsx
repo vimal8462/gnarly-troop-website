@@ -22,7 +22,7 @@ export default function Page() {
         founderImg="/images/sections/founder-img.png"
         pmImg="/images/sections/pm-img.png"
       />
-      <main style={{ paddingTop: 24 }}>...</main>
+      <main style={{ paddingTop: 24 }}></main>
       {/* <main>
         <SectionAbout />
         <SectionVisions />

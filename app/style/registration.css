@@ -1,0 +1,45 @@
+/* Container fix */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Input styling */
+.input-box {
+  height: 44px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0 12px;
+  width: 100%;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-box:focus {
+  border-color: #009edb !important;
+  box-shadow: 0 0 4px rgba(0, 158, 219, 0.4);
+  outline: none;
+}
+
+/* Button */
+.btn-register {
+  background-color: #009edb !important;
+  color: white !important;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-register:hover {
+  background-color: #007bb0 !important;
+  transform: translateY(-2px);
+}
+
+/* Mobile button full width */
+@media (max-width: 768px) {
+  .btn-register {
+    width: 100%;
+  }
+}

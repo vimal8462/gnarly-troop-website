@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "@/app/header.css";
+import { useRouter } from "next/navigation";
 
 const MENU = [
   { id: "about", label: "About" },
@@ -9,6 +10,7 @@ const MENU = [
   { id: "timeline", label: "Timeline" },
   { id: "gallery", label: "Gallery" },
   { id: "contact", label: "Contact" },
+  { id: "regsitration", label: "Registration" },
 ];
 
 export default function Header() {
@@ -21,6 +23,7 @@ export default function Header() {
 
   const touchStartX = useRef<number | null>(null);
   const dragging = useRef(false);
+   const router = useRouter();
 
   /* ---------------------------
      Active menu on scroll
@@ -71,8 +74,14 @@ export default function Header() {
 
   // ← FIX: set active on click so mobile immediately reflects selection
   const onMenuClick = (id: string) => {
-    setActive(id); // set active immediately
-    scrollToId(id);
+    // setActive(id); // set active immediately
+    // scrollToId(id);
+    if (id === "registration") {
+      router.push("/registration"); // navigate to registration page
+    } else {
+      setActive(id);
+      scrollToId(id);
+    }
     setMobileOpen(false);
   };
 
