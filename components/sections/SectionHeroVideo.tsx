@@ -192,13 +192,21 @@ export default function SectionHeroVideo({
             </div>
 
             <div className="hero-links">
-              <a href="#about">About Us</a>
+              <a className="hero-links-item" href="#about">
+                About Us
+              </a>
               <span className="sep">|</span>
-              <a href="#visions">Vision &amp; Mission</a>
+              <a className="hero-links-item" href="#visions">
+                Vision &amp; Mission
+              </a>
               <span className="sep">|</span>
-              <a href="#timeline">Strategic Objectives</a>
+              <a className="hero-links-item" href="#timeline">
+                Strategic Objectives
+              </a>
               <span className="sep">|</span>
-              <a href="#gallery">National Alignment</a>
+              <a className="hero-links-item" href="#gallery">
+                National Alignment
+              </a>
             </div>
           </div>
 

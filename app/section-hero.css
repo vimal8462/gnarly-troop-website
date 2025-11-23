@@ -214,7 +214,25 @@
 .hero-links a {
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
+  position: relative;
+  text-decoration: none;
 }
+
+.hero-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.hero-links a:hover::after {
+  width: 100%;
+}
+
 .hero-links .sep {
   opacity: 0.38;
 }
@@ -306,4 +324,20 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+/* Blink animation */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.hero-controls-bottom {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  animation: blink 1.4s infinite ease-in-out;
 }
