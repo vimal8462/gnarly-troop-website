@@ -1,4 +1,17 @@
+/* -------------------------------------- */
+/*  Tailwind MUST be the first imports    */
+/* -------------------------------------- */
 @import "tailwindcss";
+
+
+/* -------------------------------------- */
+/*   Global Imports                       */
+/* -------------------------------------- */
+@import "flag-icons/css/flag-icons.min.css";
+
+/* -------------------------------------- */
+/*  Root Variables                        */
+/* -------------------------------------- */
 :root {
   --accent: #0b66b3;
   --accent-2: #f08b3a;
@@ -15,7 +28,7 @@ html,
 body {
   height: 100%;
   /* background: linear-gradient(180deg, #fff, #f7fafc); */
-  background: url("/images/bg-img-2.webp") no-repeat center center fixed;
+  /* background: url("/images/bg-img-2.webp") no-repeat center center fixed; */
   background-size: cover;
   background-attachment: fixed;
   font-family: Montserrat, system-ui, Arial;

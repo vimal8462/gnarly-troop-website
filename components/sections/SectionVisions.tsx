@@ -1,22 +1,290 @@
-"use client";
-import React, { useRef } from "react";
-export default function SectionVisions() {
-  const rowRef = useRef<HTMLDivElement | null>(null);
+"use client";                      // <<< REQUIRED FOR useState/useEffect in Next.js
+
+import { useState, useRef, useEffect } from "react";
+import { Users, Handshake, Globe, Leaf } from "lucide-react";
+
+export default function GnarlyTroopVision() {
+  const [activeSection, setActiveSection] = useState(null);
+  const svgRef = useRef(null);
+  const [circleCoords, setCircleCoords] = useState([]);
+  const pipeRefs = useRef([]);
+
+  const visionData = [
+    {
+      id: "climate",
+      title: "CLIMATE",
+      icon: Leaf,
+      image:
+        "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
+      description:
+        "Advocating green living, clean air, and ecosystem conservation through eco-tourism and tree plantation.",
+    },
+    {
+      id: "community",
+      title: "COMMUNITY",
+      icon: Users,
+      image:
+        "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=300&fit=crop",
+      description:
+        "Promoting rural empowerment, health, education, and youth development.",
+    },
+    {
+      id: "culture",
+      title: "CULTURE",
+      icon: Globe,
+      image:
+        "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop",
+      description:
+        "Reviving Indian traditions through arts, crafts, cuisines, festivals, and interfaith dialogue.",
+    },
+    {
+      id: "cooperation",
+      title: "COOPERATION",
+      icon: Handshake,
+      image:
+        "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop",
+      description:
+        "Strengthening global harmony through multi-cultural exchanges and international partnerships.",
+    },
+  ];
+
+  const handleCircleClick = (id) =>
+    setActiveSection(activeSection === id ? null : id);
+
+  // Calculate center coords
+  const calculateCircleCoords = () => {
+    if (!svgRef.current) return;
+
+    const circles = document.querySelectorAll(".circle-btn");
+    const coords = Array.from(circles).map((c) => {
+      const rect = c.getBoundingClientRect();
+      const parentRect = svgRef.current.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2 - parentRect.left,
+        y: rect.top + rect.height / 2 - parentRect.top,
+      };
+    });
+
+    setCircleCoords(coords);
+  };
+
+  useEffect(() => {
+    calculateCircleCoords();
+    window.addEventListener("resize", calculateCircleCoords);
+    return () =>
+      window.removeEventListener("resize", calculateCircleCoords);
+  }, []);
+
+  // liquid animation
+  useEffect(() => {
+    let animationFrame;
+    const animate = () => {
+      pipeRefs.current.forEach((path) => {
+        if (path) {
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = `${length / 2} ${length / 2}`;
+          const offset = parseFloat(path.dataset.offset || 0) - 3;
+          path.dataset.offset = offset;
+          path.style.strokeDashoffset = offset;
+        }
+      });
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animate();
+    return () => cancelAnimationFrame(animationFrame);
+  }, [circleCoords]);
+
   return (
-    <section id="visions" className="reveal">
-      <h3>4C's Vision</h3>
-      <div style={{ display: "flex", gap: 12, overflowX: "auto" }} ref={rowRef}>
-        {["Climate", "Community", "Culture", "Cooperation"].map((t, i) => (
-          <div
-            key={i}
-            className="card-small"
-            style={{ minWidth: 240, padding: 16 }}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 border-t-2 border-b-2 border-gray-300 py-4 px-8 inline-block">
+            4C's Vision of Gnarly Troop
+          </h1>
+        </div>
+
+        {/* Circles + Pipes */}
+        <div className="relative flex flex-col lg:flex-row justify-center items-center mb-16">
+          <svg
+            ref={svgRef}
+            className="absolute inset-0 w-full h-full pointer-events-none z-0"
           >
-            <h4>{t}</h4>
-            <p className="muted">Details…</p>
-          </div>
-        ))}
+            <defs>
+              <linearGradient
+                id="pipe3DGradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor="#c7d2fe" />
+                <stop offset="50%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1e40af" />
+              </linearGradient>
+
+              <linearGradient
+                id="liquidFlow"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" stopColor="#60a5fa" />
+                <stop offset="50%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#60a5fa" />
+              </linearGradient>
+            </defs>
+
+            {circleCoords.map((coord, i) => {
+              if (i === circleCoords.length - 1) return null;
+
+              const next = circleCoords[i + 1];
+              const curveHeight = window.innerWidth < 1024 ? 80 : 120;
+              const controlYOffset =
+                curveHeight * (i % 2 === 0 ? -1 : 1);
+
+              const pathD = `M${coord.x},${coord.y} C${
+                (coord.x + next.x) / 2
+              },${coord.y + controlYOffset} ${
+                (coord.x + next.x) / 2
+              },${next.y - controlYOffset} ${next.x},${next.y}`;
+
+              return (
+                <g key={i}>
+                  <path
+                    d={pathD}
+                    stroke="url(#pipe3DGradient)"
+                    strokeWidth="16"
+                    fill="transparent"
+                    strokeLinecap="round"
+                  />
+
+                  <path
+                    ref={(el) => (pipeRefs.current[i] = el)}
+                    d={pathD}
+                    stroke="url(#liquidFlow)"
+                    strokeWidth="10"
+                    fill="transparent"
+                    strokeLinecap="round"
+                    data-offset="0"
+                  />
+                </g>
+              );
+            })}
+          </svg>
+
+          {/* Circles */}
+          {visionData.map((item) => (
+            <div
+              key={item.id}
+              className="relative z-10 flex justify-center my-4 lg:my-0 lg:flex-1"
+            >
+              <button
+                onClick={() => handleCircleClick(item.id)}
+                className="circle-btn relative transition-all duration-500 ease-out"
+              >
+                <div
+                  className={`w-36 h-36 sm:w-44 sm:h-44 rounded-full border-4 ${
+                    activeSection === item.id
+                      ? "border-blue-400 shadow-2xl"
+                      : "border-dashed border-gray-300 shadow-lg"
+                  } flex items-center justify-center bg-white transition-all duration-500 cursor-pointer ${
+                    activeSection === item.id
+                      ? "animate-pulse-slow"
+                      : ""
+                  }`}
+                >
+                  <div className="text-center">
+                    <div
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto mb-2 transition-all duration-500 ${
+                        activeSection === item.id
+                          ? "bg-blue-500 scale-110"
+                          : "bg-blue-400"
+                      }`}
+                    >
+                      <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                    </div>
+                    <h3
+                      className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
+                        activeSection === item.id
+                          ? "text-blue-400"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      {item.title.charAt(0) +
+                        item.title.slice(1).toLowerCase()}
+                    </h3>
+                  </div>
+                </div>
+
+                {activeSection === item.id && (
+                  <div className="absolute inset-0 rounded-full border-4 border-blue-400 animate-ping opacity-75"></div>
+                )}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {visionData.map((item) => (
+            <div
+              key={item.title}
+              className={`bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-500 ${
+                activeSection === item.id
+                  ? "scale-105 shadow-2xl ring-4 ring-blue-400"
+                  : activeSection === null
+                  ? "hover:scale-105"
+                  : "opacity-60 scale-95"
+              }`}
+            >
+              <div
+                className={`text-white text-center py-3 font-bold text-sm uppercase tracking-wider transition-colors duration-300 ${
+                  activeSection === item.id
+                    ? "bg-blue-500"
+                    : "bg-blue-400"
+                }`}
+              >
+                {item.title}
+              </div>
+
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className={`w-full h-full object-cover transition-transform duration-700 ${
+                    activeSection === item.id ? "scale-110" : "scale-100"
+                  }`}
+                />
+              </div>
+
+              <div className="p-4 bg-gray-50">
+                <p className="text-sm text-blue-500 leading-relaxed text-center font-medium">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.02);
+          }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
   );
 }

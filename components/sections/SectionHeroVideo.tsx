@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import "@/app/section-hero.css";
+import TypeLoop from "../TypeLoop";
 
 type Props = {
   videoSrc?: string;
@@ -168,12 +169,19 @@ export default function SectionHeroVideo({
         {/* content */}
         <div className="hero-inner">
           <div className="hero-left">
+            <div className="hero-theme-script">
+              हिमालयं समारभ्य यावत् इंदु सरेावरम् | <br />
+              तं देवनिर्मितं देशं हिंदुस्थानं प्रचक्षते ||
+            </div>
+
             <div className="hero-tag">
               GREETING THE WORLD AT BHARAT MANDAPAM
             </div>
 
             <h1 className="hero-title">
-              <span className="accent">Padharo Mhare Desh BHARAT</span>
+              {/* <span className="accent">Padharo Mhare Desh BHARAT</span> */}
+              <TypeLoop />
+
               <br />
               <span className="big">
                 Global Leadership Summit &amp;
@@ -182,14 +190,6 @@ export default function SectionHeroVideo({
             </h1>
 
             <div className="hero-date">21st – 22nd FEBRUARY, 2026</div>
-
-            <div className="founder-card">
-              <img className="founder-avatar" src={founderImg} alt="Founder" />
-              <div className="founder-info">
-                <div className="founder-name">Mr. Amarjeet Gnarly</div>
-                <div className="founder-role">Founder Gnarly Troop</div>
-              </div>
-            </div>
 
             <div className="hero-links">
               <a className="hero-links-item" href="#about">
@@ -211,7 +211,7 @@ export default function SectionHeroVideo({
           </div>
 
           <div className="">
-            <img className="hero-person-img" src={pmImg} alt="Person" />
+            <img className="hero-person-img" src={pmImg} alt="PM Image" />
           </div>
         </div>
       </section>
