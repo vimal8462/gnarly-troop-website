@@ -278,6 +278,11 @@
     margin-bottom: 0;
   } */
 
+  .hero-person-img {
+    height: 250px;
+    margin-bottom: -65%;
+  }
+
   .hero-controls-bottom {
     left: 16px;
     bottom: 16px;
