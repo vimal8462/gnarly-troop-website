@@ -18,7 +18,7 @@ const ministerCards = [
     title: "Hon'ble Union Minister of Culture & Tourism | Govt of India",
     image: "/images/crousel/ministers/img-shri-gajendra-singh-shekhawat.png",
     certificateUrl:
-      "/images/crousel/letters/img-letter-gajendra-singh-shekhawat.png",
+      "/images/crousel/letters/img-letter-gajendra-singh-shekhawat.jpg",
   },
   {
     id: 2,
@@ -38,7 +38,8 @@ const ministerCards = [
     id: 4,
     name: "Swami Balmukundacharya Ji Maharaj",
     title: "Hon'ble Member of the Legislative Assembly Rajasthan",
-    image: "/images/crousel/minister/img-swami-balmukundacharya-ji-maharaj.png",
+    image:
+      "/images/crousel/ministers/img-swami-balmukundacharya-ji-maharaj.png",
     certificateUrl: "/images/crousel/letters/img-letter-balmukundacharya.png",
   },
 ];
@@ -59,8 +60,8 @@ export default function Page() {
           staticImage="/images/sections/img-globe-girl-flag.png"
           cards={ministerCards}
         />
-        <SectionTimeline/>
-        <SectionVisions /> 
+        <SectionTimeline />
+        <SectionVisions />
       </main>
     </>
   );
