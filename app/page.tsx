@@ -59,6 +59,8 @@ export default function Page() {
           staticImage="/images/sections/img-globe-girl-flag.png"
           cards={ministerCards}
         />
+        <SectionTimeline/>
+        <SectionVisions /> 
       </main>
     </>
   );
