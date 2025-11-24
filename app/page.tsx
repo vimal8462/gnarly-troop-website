@@ -3,13 +3,11 @@ import SectionHeroVideo from "@/components/sections/SectionHeroVideo";
 import SectionAbout from "@/components/sections/SectionAbout";
 import SectionVisions from "@/components/sections/SectionVisions";
 import SectionTimeline from "@/components/sections/SectionTimeline";
-import SectionScrollingImages from "@/components/sections/SectionScrollingImages";
-import SectionSummit from "@/components/sections/SectionSummit";
-import SectionExplore from "@/components/sections/SectionExplore";
-import SectionPartners from "@/components/sections/SectionPartners";
 import SectionGallery from "@/components/sections/SectionGallery";
-import Footer from "@/components/sections/Footer";
 import SectionMinisterLetter from "@/components/sections/SectionMinisterLetter";
+import SectionMinistries from "@/components/sections/SectionMinistries";
+import SectionSchedules from "@/components/sections/SectionSchedules";
+import SectionPartners from "@/components/sections/SectionPartners";
 
 const ministerCards = [
   {
@@ -57,11 +55,14 @@ export default function Page() {
       <main>
         <SectionAbout />
         <SectionMinisterLetter
-          staticImage="/images/sections/img-globe-girl-flag.png"
+          staticImage="/images/sections/img-globe-girl-flag-2.png"
           cards={ministerCards}
         />
         <SectionTimeline />
         <SectionVisions />
+        <SectionMinistries />
+        <SectionSchedules />
+        <SectionPartners />
       </main>
     </>
   );

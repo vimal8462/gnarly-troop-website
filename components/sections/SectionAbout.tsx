@@ -14,6 +14,7 @@ import { color } from "framer-motion";
 export default function SectionAbout() {
   return (
     <section
+      id="sectionAbout"
       className="hero-map-root"
       role="region"
       aria-label="Welcome to India map hero"

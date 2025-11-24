@@ -1,4 +1,4 @@
-"use client";                      // <<< REQUIRED FOR useState/useEffect in Next.js
+"use client"; // <<< REQUIRED FOR useState/useEffect in Next.js
 
 import { useState, useRef, useEffect } from "react";
 import { Users, Handshake, Globe, Leaf } from "lucide-react";
@@ -71,8 +71,7 @@ export default function GnarlyTroopVision() {
   useEffect(() => {
     calculateCircleCoords();
     window.addEventListener("resize", calculateCircleCoords);
-    return () =>
-      window.removeEventListener("resize", calculateCircleCoords);
+    return () => window.removeEventListener("resize", calculateCircleCoords);
   }, []);
 
   // liquid animation
@@ -97,7 +96,10 @@ export default function GnarlyTroopVision() {
   }, [circleCoords]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4">
+    <div
+      id="sectionVisions"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -125,13 +127,7 @@ export default function GnarlyTroopVision() {
                 <stop offset="100%" stopColor="#1e40af" />
               </linearGradient>
 
-              <linearGradient
-                id="liquidFlow"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
+              <linearGradient id="liquidFlow" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#60a5fa" />
                 <stop offset="50%" stopColor="#3b82f6" />
                 <stop offset="100%" stopColor="#60a5fa" />
@@ -143,14 +139,13 @@ export default function GnarlyTroopVision() {
 
               const next = circleCoords[i + 1];
               const curveHeight = window.innerWidth < 1024 ? 80 : 120;
-              const controlYOffset =
-                curveHeight * (i % 2 === 0 ? -1 : 1);
+              const controlYOffset = curveHeight * (i % 2 === 0 ? -1 : 1);
 
               const pathD = `M${coord.x},${coord.y} C${
                 (coord.x + next.x) / 2
-              },${coord.y + controlYOffset} ${
-                (coord.x + next.x) / 2
-              },${next.y - controlYOffset} ${next.x},${next.y}`;
+              },${coord.y + controlYOffset} ${(coord.x + next.x) / 2},${
+                next.y - controlYOffset
+              } ${next.x},${next.y}`;
 
               return (
                 <g key={i}>
@@ -192,9 +187,7 @@ export default function GnarlyTroopVision() {
                       ? "border-blue-400 shadow-2xl"
                       : "border-dashed border-gray-300 shadow-lg"
                   } flex items-center justify-center bg-white transition-all duration-500 cursor-pointer ${
-                    activeSection === item.id
-                      ? "animate-pulse-slow"
-                      : ""
+                    activeSection === item.id ? "animate-pulse-slow" : ""
                   }`}
                 >
                   <div className="text-center">
@@ -214,8 +207,7 @@ export default function GnarlyTroopVision() {
                           : "text-gray-800"
                       }`}
                     >
-                      {item.title.charAt(0) +
-                        item.title.slice(1).toLowerCase()}
+                      {item.title.charAt(0) + item.title.slice(1).toLowerCase()}
                     </h3>
                   </div>
                 </div>
@@ -243,9 +235,7 @@ export default function GnarlyTroopVision() {
             >
               <div
                 className={`text-white text-center py-3 font-bold text-sm uppercase tracking-wider transition-colors duration-300 ${
-                  activeSection === item.id
-                    ? "bg-blue-500"
-                    : "bg-blue-400"
+                  activeSection === item.id ? "bg-blue-500" : "bg-blue-400"
                 }`}
               >
                 {item.title}

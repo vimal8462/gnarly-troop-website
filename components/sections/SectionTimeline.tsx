@@ -4,28 +4,71 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const timeline = [
-  { year: 2022, country: "IN", city: "NEW DELHI", details: "Event hosted in New Delhi, India." },
-  { year: 2023, country: "NP", city: "KATHMANDU & NEW DELHI", details: "Cross-border Nepal–India cultural exchange." },
-  { year: 2024, country: "IN", city: "NOIDA & JAIPUR", details: "Multiple youth leadership programs." },
-  { year: 2025, country: "IN", city: "NEW DELHI & SIKKIM", details: "Summits held in Delhi and NE India." },
-  { year: 2026, country: "GB", city: "LONDON & NEW DELHI", details: "Global cultural leadership summit." },
-  { year: 2027, country: "AE", city: "DUBAI & NEW DELHI", details: "Middle East partnership expansion." },
-  { year: 2028, country: "US", city: "CHICAGO & NEW DELHI", details: "United States collaboration program." },
-  { year: 2029, country: "IT", city: "ROME & NEW DELHI", details: "European youth exchange delegation." },
+  {
+    year: 2022,
+    country: "IN",
+    city: "NEW DELHI",
+    details: "Event hosted in New Delhi, India.",
+  },
+  {
+    year: 2023,
+    country: "NP",
+    city: "KATHMANDU & NEW DELHI",
+    details: "Cross-border Nepal–India cultural exchange.",
+  },
+  {
+    year: 2024,
+    country: "IN",
+    city: "NOIDA & JAIPUR",
+    details: "Multiple youth leadership programs.",
+  },
+  {
+    year: 2025,
+    country: "IN",
+    city: "NEW DELHI & SIKKIM",
+    details: "Summits held in Delhi and NE India.",
+  },
+  {
+    year: 2026,
+    country: "GB",
+    city: "LONDON & NEW DELHI",
+    details: "Global cultural leadership summit.",
+  },
+  {
+    year: 2027,
+    country: "AE",
+    city: "DUBAI & NEW DELHI",
+    details: "Middle East partnership expansion.",
+  },
+  {
+    year: 2028,
+    country: "US",
+    city: "CHICAGO & NEW DELHI",
+    details: "United States collaboration program.",
+  },
+  {
+    year: 2029,
+    country: "IT",
+    city: "ROME & NEW DELHI",
+    details: "European youth exchange delegation.",
+  },
 ];
 
 export default function Timeline() {
   const [selected, setSelected] = useState(null);
   const currentYear = new Date().getFullYear();
 
-  const upcomingEvents = timeline.filter(e => e.year > currentYear);
-  const recentUpcomingYear = upcomingEvents.length ? upcomingEvents[0].year : null;
+  const upcomingEvents = timeline.filter((e) => e.year > currentYear);
+  const recentUpcomingYear = upcomingEvents.length
+    ? upcomingEvents[0].year
+    : null;
 
   const progressPercent =
-    (timeline.filter(e => e.year <= currentYear).length / timeline.length) * 100;
+    (timeline.filter((e) => e.year <= currentYear).length / timeline.length) *
+    100;
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section id="sectionTimelines" className="relative py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-20 opacity-15">
         <img
@@ -67,9 +110,12 @@ export default function Timeline() {
             const isRecentUpcoming = item.year === recentUpcomingYear;
             const isFuture = item.year > currentYear && !isRecentUpcoming;
 
-            const stylePast = "opacity-40 text-gray-500 border-gray-400 bg-gray-200";
-            const styleRecent = "border-[#FF9933] ring-4 ring-[#FF9933]/40 text-[#FF9933] animate-pulse";
-            const styleFuture = "border-blue-500 ring-2 ring-blue-300 text-blue-500";
+            const stylePast =
+              "opacity-40 text-gray-500 border-gray-400 bg-gray-200";
+            const styleRecent =
+              "border-[#FF9933] ring-4 ring-[#FF9933]/40 text-[#FF9933] animate-pulse";
+            const styleFuture =
+              "border-blue-500 ring-2 ring-blue-300 text-blue-500";
 
             return (
               <div
@@ -197,7 +243,9 @@ export default function Timeline() {
               exit={{ scale: 0.8, opacity: 0 }}
             >
               <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                <span className={`fi fi-${selected.country.toLowerCase()}`}></span>
+                <span
+                  className={`fi fi-${selected.country.toLowerCase()}`}
+                ></span>
                 {selected.city}
               </h3>
 

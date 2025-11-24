@@ -3,7 +3,6 @@
 /* -------------------------------------- */
 @import "tailwindcss";
 
-
 /* -------------------------------------- */
 /*   Global Imports                       */
 /* -------------------------------------- */
@@ -42,4 +41,17 @@ a {
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 0px;
+}
+
+.fi {
+  width: -1.33333em;
+  line-height: 1em;
+  display: inline-block;
+  position: relative;
+}
+.fib,
+.fi {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

@@ -173,7 +173,7 @@
 /* controls centered under right column */
 .sml2-controls {
   position: absolute;
-  bottom: 12px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
