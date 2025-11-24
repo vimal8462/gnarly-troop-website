@@ -8,6 +8,7 @@ import SectionMinisterLetter from "@/components/sections/SectionMinisterLetter";
 import SectionMinistries from "@/components/sections/SectionMinistries";
 import SectionSchedules from "@/components/sections/SectionSchedules";
 import SectionPartners from "@/components/sections/SectionPartners";
+import SectionFooter from "@/components/sections/SectionFooter";
 
 const ministerCards = [
   {
@@ -63,6 +64,8 @@ export default function Page() {
         <SectionMinistries />
         <SectionSchedules />
         <SectionPartners />
+
+        <SectionFooter />
       </main>
     </>
   );

@@ -1,62 +1,146 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
+import styles from "@/app/gallery.module.css";
 
-export default function SectionGallery() {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const imageTrack = useRef<HTMLDivElement | null>(null);
+/**
+ * Props:
+ *  - images: array of image URLs (strings)
+ *  - videos: array of video URLs (strings)
+ *  - baseSpeed: pixels per second used to compute animation duration (higher = faster)
+ */
+export default function MediaGallery({
+  images = [],
+  videos = [],
+  baseSpeed = 28,
+}) {
+  const imgTrack = useRef(null);
+  const vidTrack = useRef(null);
 
-  function onVideoPlay(id: string) {
-    setActiveVideo(id);
-    // pause image slider auto-play: you can store interval and clear it; here we just add a paused class
-    imageTrack.current?.classList.add("paused");
-  }
-  function onVideoPause() {
-    setActiveVideo(null);
-    imageTrack.current?.classList.remove("paused");
-  }
+  // compute and set --marquee-duration on each track based on its scrollWidth
+  useEffect(() => {
+    function setDuration(trackRef) {
+      const el = trackRef.current;
+      if (!el) return;
+      // track content is duplicated to allow seamless loop; use half width as single pass width
+      const totalWidth = el.scrollWidth / 2 || el.scrollWidth;
+      // duration in seconds = width px / speed px-per-sec
+      const duration = Math.max(6, Math.round(totalWidth / baseSpeed));
+      el.style.setProperty("--marquee-duration", `${duration}s`);
+    }
 
-  const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
-  const videos = ["/vid1.mp4", "/vid2.mp4"];
+    setDuration(imgTrack);
+    setDuration(vidTrack);
+
+    // Recalculate on resize
+    const ro = new ResizeObserver(() => {
+      setDuration(imgTrack);
+      setDuration(vidTrack);
+    });
+    if (imgTrack.current) ro.observe(imgTrack.current);
+    if (vidTrack.current) ro.observe(vidTrack.current);
+    return () => ro.disconnect();
+  }, [images, videos, baseSpeed]);
+
+  // duplicate items (arr concatenated to itself) for seamless scroll
+  const dup = (arr) => (arr && arr.length ? arr.concat(arr) : []);
+
+  // helper to play/pause video on hover/focus
+  const handleVideoHover = (e, type) => {
+    const v = e.currentTarget.querySelector("video");
+    if (!v) return;
+    if (type === "enter") {
+      v.muted = true;
+      v.play().catch(() => {}); // ignore play exceptions
+    } else {
+      v.pause();
+      v.currentTime = 0;
+    }
+  };
 
   return (
-    <section id="gallery" aria-labelledby="galleryTitle">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <div>
-          <h3 id="galleryTitle">Gallery</h3>
-          <div ref={imageTrack} className="image-track">
-            {images.map((src, i) => (
-              <div key={i} className="gallery-item">
-                <img src={src} alt={`Image ${i + 1}`} />
-              </div>
+    <section className={styles.wrapper} aria-label="Media gallery">
+      <div className={styles.column}>
+        <h3 className={styles.title}>Gallery</h3>
+        <div className={styles.viewport} aria-hidden={images.length === 0}>
+          <div
+            className={styles.track}
+            ref={imgTrack}
+            // pause animation while pointer is inside (CSS also handles this)
+            onMouseEnter={(e) => e.currentTarget.classList.add(styles.paused)}
+            onMouseLeave={(e) =>
+              e.currentTarget.classList.remove(styles.paused)
+            }
+          >
+            {dup(images).map((src, i) => (
+              <figure
+                className={styles.card}
+                key={`img-${i}`}
+                tabIndex={0}
+                aria-label={`Image ${(i % (images.length || 1)) + 1}`}
+              >
+                <img
+                  className={styles.media}
+                  src={src}
+                  alt={`Gallery image ${(i % (images.length || 1)) + 1}`}
+                  loading="lazy"
+                />
+                <figcaption className={styles.caption}>
+                  Image {(i % (images.length || 1)) + 1}
+                </figcaption>
+              </figure>
             ))}
-          </div>
-          <div style={{ marginTop: 8 }}>
-            <a href="/gallery" className="btn btn-light">
-              View All Images
-            </a>
           </div>
         </div>
+      </div>
 
-        <div>
-          <h3>Videos</h3>
-          <div className="video-track">
-            {videos.map((src, i) => (
-              <div key={i} style={{ marginBottom: 12 }}>
+      <div className={styles.column}>
+        <h3 className={styles.title}>Videos</h3>
+        <div className={styles.viewport} aria-hidden={videos.length === 0}>
+          <div
+            className={`${styles.track} ${styles.trackReverse}`}
+            ref={vidTrack}
+            onMouseEnter={(e) => e.currentTarget.classList.add(styles.paused)}
+            onMouseLeave={(e) =>
+              e.currentTarget.classList.remove(styles.paused)
+            }
+          >
+            {dup(videos).map((src, i) => (
+              <figure
+                className={styles.card}
+                key={`vid-${i}`}
+                tabIndex={0}
+                onMouseEnter={(e) => handleVideoHover(e, "enter")}
+                onMouseLeave={(e) => handleVideoHover(e, "leave")}
+                onFocus={(e) => handleVideoHover(e, "enter")}
+                onBlur={(e) => handleVideoHover(e, "leave")}
+                aria-label={`Video ${(i % (videos.length || 1)) + 1}`}
+              >
                 <video
-                  width="100%"
-                  controls
-                  onPlay={() => onVideoPlay(src)}
-                  onPause={() => onVideoPause()}
-                  onEnded={() => onVideoPause()}
+                  className={styles.media}
                   src={src}
+                  playsInline
+                  muted
+                  loop
+                  preload="metadata"
+                  // don't autoplay globally; play on hover via handlers
                 />
-              </div>
+                <div className={styles.playIcon} aria-hidden>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="28"
+                    height="28"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  >
+                    <path d="M5 3v18l15-9L5 3z" />
+                  </svg>
+                </div>
+                <figcaption className={styles.caption}>
+                  Video {(i % (videos.length || 1)) + 1}
+                </figcaption>
+              </figure>
             ))}
-          </div>
-          <div style={{ marginTop: 8 }}>
-            <a href="/gallery" className="btn btn-light">
-              View All Videos
-            </a>
           </div>
         </div>
       </div>

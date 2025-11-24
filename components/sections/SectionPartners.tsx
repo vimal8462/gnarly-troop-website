@@ -24,7 +24,7 @@ const samplePartners: Partner[] = [
   {
     id: 2,
     name: "Sports Partner",
-    logo: "/images/logos/img-cecathlon-logo.png",
+    logo: "/images/logos/img-decathlon-logo.png",
     short: "",
     description:
       "Decathlon is global sports retailer known for offering a wide range of high quality, affordable sporting goods and equipments. With a mission to make sports accessible to everyone. It provides products for over 80 sports, catering to athletes of all levels. Founded in 1976 in France, the brand is renowned for its innovation, in-house brands, and commitment to sustainability, making it a favourite among sports and enthusiasts worldwide.",
