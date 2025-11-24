@@ -18,7 +18,7 @@ type Props = {
 
 export default function SectionMinisterLetter({
   cards,
-  staticImage = "/images/sections/img-globe-girl-flag.png",
+  staticImage = "/images/sections/img-globe-girl-flag-2.png",
 }: Props) {
   const FALLBACK = "/mnt/data/HorizontalBorder.png";
 
