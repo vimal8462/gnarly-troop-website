@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "@/app/header.css";
+import styles from "@/app/headers.module.css";
 
 type MenuItem = {
   id: string;
@@ -286,26 +286,32 @@ export default function Header() {
   ---------------------------- */
   return (
     <>
-      <header className={`site-header ${isScrolled ? "scrolled" : ""}`}>
-        <div className="site-inner">
+      <header
+        className={`${styles["site-header"]} ${
+          isScrolled ? styles.scrolled : ""
+        }`}
+      >
+        <div className={styles["site-inner"]}>
           {/* LOGO + TITLE */}
-          <div className="brand-row">
+          <div className={styles["brand-row"]}>
             <img
               src="/images/logos/logo-2.svg"
               alt="Gnarly Troop Logo"
               width={272}
               height={72}
-              className="logo"
+              className={styles.logo}
             />
           </div>
 
           {/* DESKTOP MENU */}
-          <nav className="desktop-menu">
+          <nav className={styles["desktop-menu"]}>
             {MENU.map((m) => (
               <button
                 key={m.id}
                 onClick={() => onMenuClick(m)}
-                className={`menu-item ${active === m.id ? "active" : ""}`}
+                className={`${styles["menu-item"]} ${
+                  active === m.id ? styles.active : ""
+                }`}
                 type="button"
               >
                 {m.label}
@@ -315,14 +321,35 @@ export default function Header() {
 
           {/* MOBILE TOGGLE */}
           <button
-            className={`mobile-toggle ${mobileOpen ? "open" : ""}`}
+            className={`${styles["mobile-toggle"]} ${
+              mobileOpen ? styles.open : ""
+            }`}
             onClick={() => setMobileOpen((s) => !s)}
             type="button"
+            aria-label="Toggle menu"
           >
-            <svg className="hamb" viewBox="0 0 26 16">
-              <rect className="line top" x="0" y="0" width="26" height="2" />
-              <rect className="line mid" x="0" y="7" width="26" height="2" />
-              <rect className="line bot" x="0" y="14" width="26" height="2" />
+            <svg className={styles.hamb} viewBox="0 0 26 16" aria-hidden>
+              <rect
+                className={`${styles.line} ${styles.top}`}
+                x="0"
+                y="0"
+                width="26"
+                height="2"
+              />
+              <rect
+                className={`${styles.line} ${styles.mid}`}
+                x="0"
+                y="7"
+                width="26"
+                height="2"
+              />
+              <rect
+                className={`${styles.line} ${styles.bot}`}
+                x="0"
+                y="14"
+                width="26"
+                height="2"
+              />
             </svg>
           </button>
         </div>
@@ -331,31 +358,38 @@ export default function Header() {
       {/* MOBILE MENU LAYER */}
       <div
         ref={overlayRef}
-        className={`mobile-overlay ${mobileOpen ? "open" : ""}`}
+        className={`${styles["mobile-overlay"]} ${
+          mobileOpen ? styles.open : ""
+        }`}
         onClick={() => setMobileOpen(false)}
       >
         <div
           ref={panelRef}
-          className={`mobile-panel ${mobileOpen ? "open" : ""}`}
+          className={`${styles["mobile-panel"]} ${
+            mobileOpen ? styles.open : ""
+          }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="mobile-head">
-            <img src="/images/logos/logo-2.svg" width={120} />
+          <div className={styles["mobile-head"]}>
+            <img src="/images/logos/logo-2.svg" width={120} alt="logo" />
             <button
-              className="close-btn"
+              className={styles["close-btn"]}
               onClick={() => setMobileOpen(false)}
               type="button"
+              aria-label="Close menu"
             >
               ✕
             </button>
           </div>
 
-          <div className="mobile-list">
+          <div className={styles["mobile-list"]}>
             {MENU.map((m) => (
               <button
                 key={m.id}
                 onClick={() => onMenuClick(m)}
-                className={`mobile-item ${active === m.id ? "active" : ""}`}
+                className={`${styles["mobile-item"]} ${
+                  active === m.id ? styles.active : ""
+                }`}
                 type="button"
               >
                 {m.label}
@@ -366,7 +400,7 @@ export default function Header() {
       </div>
 
       {/* SPACER */}
-      <div className="header-spacer" />
+      <div className={styles["header-spacer"]} />
     </>
   );
 }

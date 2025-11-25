@@ -1,61 +1,64 @@
-// HeroMap.jsx (Next.js React component - no Tailwind)
-// Save this file as: components/HeroMap.jsx
-// Also save the accompanying CSS as: components/HeroMap.css (contents shown below)
-
 import React from "react";
-import "@/app/about.css";
-import { color } from "framer-motion";
+import styles from "@/app/about.module.css";
 
-/**
- * HeroMap
- * - Uses the image at: /mnt/data/Actual.png (replace with '/Actual.png' if you move the image to /public)
- * - No Tailwind — plain CSS in HeroMap.css
- */
 export default function SectionAbout() {
   return (
     <section
       id="sectionAbout"
-      className="hero-map-root"
+      className={styles["hero-map-root"]}
       role="region"
       aria-label="Welcome to India map hero"
     >
-      <div className="hero-map-viewport">
+      <div className={styles["hero-map-viewport"]}>
         <img
           src="/images/sections/bg-about-country-maps.png"
           alt="World map with India highlighted"
-          className="hero-map-image"
+          className={styles["hero-map-image"]}
           aria-hidden="true"
         />
 
-        <div className="hero-content">
-          <h1 className="hero-title-hi">स्वागतम् मम राष्ट्रे भारतवर्षे !</h1>
-          <h2 className="hero-title-en">Welcome to My Country, India</h2>
-          {/* <p className="hero-sub">Explore Bharat with Gnarly Troop</p> */}
-          <p className="hero-sub">
-            <span className="hero-sub-text">
+        <div className={styles["hero-content"]}>
+          <h1 className={styles["hero-title-hi"]}>
+            स्वागतम् मम राष्ट्रे भारतवर्षे !
+          </h1>
+
+          <h2 className={styles["hero-title-en"]}>
+            Welcome to My Country, India
+          </h2>
+
+          <p className={styles["hero-sub"]}>
+            <span className={styles["hero-sub-text"]}>
               Explore Bharat with Gnarly Troop
             </span>
-            <span className="hero-sub-estd">EST. 2013</span>
+            <span className={styles["hero-sub-estd"]}>EST. 2013</span>
           </p>
 
-          <div className="legend">
-            <div className="legend-bar" aria-hidden>
-              <span className="dot dot-left" />
-              <span className="dot dot-center" />
-              <span className="dot dot-right" />
+          <div className={styles.legend}>
+            <div className={styles["legend-bar"]} aria-hidden>
+              <span className={`${styles.dot} ${styles["dot-left"]}`} />
+              <span className={`${styles.dot} ${styles["dot-center"]}`} />
+              <span className={`${styles.dot} ${styles["dot-right"]}`} />
             </div>
 
-            <div className="legend-labels">
-              <span className="legend-item" style={{ color: "var(--pink)" }}>
-                {/* <span className="swatch sw-left" /> */}
+            <div className={styles["legend-labels"]}>
+              <span
+                className={styles["legend-item"]}
+                style={{ color: "var(--pink)" }}
+              >
                 My Country
               </span>
-              <span className="legend-item" style={{ color: "var(--orange)" }}>
-                {/* <span className="swatch sw-center" /> */}
+
+              <span
+                className={styles["legend-item"]}
+                style={{ color: "var(--accent-2)" }}
+              >
                 My Responsibility
               </span>
-              <span className="legend-item" style={{ color: "var(--blue)" }}>
-                {/* <span className="swatch sw-right" /> */}
+
+              <span
+                className={styles["legend-item"]}
+                style={{ color: "var(--blue)" }}
+              >
                 My Pride
               </span>
             </div>
@@ -65,8 +68,3 @@ export default function SectionAbout() {
     </section>
   );
 }
-
-/*
-  HeroMap.css
-  Save this content into: components/HeroMap.css
-*/

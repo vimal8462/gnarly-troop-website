@@ -7,12 +7,12 @@
 
 /* File: SectionSchedules.module.css */
 
-:root {
+/* :root {
   --accent: #1f6feb;
   --muted: #6b7280;
   --bg: #ffffff;
   --card: #f8fafc;
-}
+} */
 
 .section {
   padding: 3rem 1rem;
@@ -28,7 +28,7 @@
   text-align: center;
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   letter-spacing: 0.4px;
 }
 

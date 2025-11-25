@@ -10,9 +10,16 @@ type Block = {
 
 const day1: Block[] = [
   {
-    time: "10:00 AM – 10:45 AM",
+    time: "09:00 AM – 10:00 AM",
     title: "Delegate Reception & Traditional Welcome",
-    details: "Guard of Honour | Tilak Ceremony | Live Folk Music",
+    details:
+      "Guard of Honour by Sainik School Cadets | Tilak & Turban Ceremony | Live Folk Instrumental Ensemble (Rajasthani Langa Group) | Cultural Souvenir Distribution & Networking Tea",
+  },
+  {
+    time: " ",
+    title: "CEREMONIAL HIGHLIGHTS",
+    details:
+      "Invocation: Vande Mataram by School Choir. | Welcome Address: President, Gnarly Troop Global Federation. | Chief Guest Address: Hon'ble Prime Minister of India. | Keynote Address: Hon'ble Union Minister of Culture. | Special Address: UN Cultural Envoy / Ambassador. | Vote of Thanks: Chief Adviser, Gnarly Troop Global Federation",
   },
   {
     time: "11:45 AM – 12:45 PM",

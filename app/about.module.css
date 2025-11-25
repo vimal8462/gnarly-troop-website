@@ -1,15 +1,15 @@
 /* --- Begin CSS (components/HeroMap.css) --- */
-:root {
+/* :root {
   --accent: #e84a2d;
   --pink: #ff4f91;
   --orange: #f6a623;
   --blue: #3f8efc;
-}
+} */
 
 .hero-map-root {
   width: 100%;
   /* background: #000; */
-  color: var(--accent);
+  color: var(--accent-2);
   display: block;
 }
 
@@ -63,9 +63,9 @@
 .hero-title-hi {
   margin: 0;
   font-weight: 500;
-  font-size: 28px;
+  font-size: 30px;
   line-height: 1.05;
-  color: var(--accent);
+  color: var(--accent-2);
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
 }
 @media (min-width: 768px) {
@@ -83,7 +83,7 @@
   margin: 8px 0 0 0;
   font-weight: 800;
   font-size: 20px;
-  color: var(--accent);
+  color: var(--accent-2);
 }
 @media (min-width: 768px) {
   .hero-title-en {
@@ -106,7 +106,7 @@
 
 .hero-sub {
   margin-top: 18px;
-  color: #000000cf;
+  color: var(--muted);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -190,7 +190,7 @@
 .dot-center {
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--orange);
+  background: var(--accent-2);
 }
 .dot-right {
   right: 5%;
@@ -222,7 +222,7 @@
   background: var(--pink);
 }
 .sw-center {
-  background: var(--orange);
+  background: var(--accent-2);
 }
 .sw-right {
   background: var(--blue);
