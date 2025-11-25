@@ -105,7 +105,7 @@ export default function SectionHeroVideo({
 
   return (
     <>
-      <section className="hero-section" aria-label="Hero">
+      <section id="sectionHero" className="hero-section" aria-label="Hero">
         {/* Background video */}
         <video
           ref={bgRef}

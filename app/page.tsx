@@ -5,10 +5,9 @@ import SectionVisions from "@/components/sections/SectionVisions";
 import SectionTimeline from "@/components/sections/SectionTimeline";
 import SectionMinisterLetter from "@/components/sections/SectionMinisterLetter";
 import SectionMinistries from "@/components/sections/SectionMinistries";
-import SectionSchedules from "@/components/sections/SectionSchedules";
 import SectionPartners from "@/components/sections/SectionPartners";
 import SectionFooter from "@/components/sections/SectionFooter";
-import SectionSchedules2 from "@/components/sections/SectionSchedules3";
+import SectionSchedules from "@/components/sections/SectionSchedules";
 
 const ministerCards = [
   {
@@ -63,7 +62,7 @@ export default function Page() {
         <SectionVisions />
         <SectionMinistries />
         {/* <SectionSchedules /> */}
-        <SectionSchedules2 />
+        <SectionSchedules />
         <SectionPartners />
         <SectionFooter />
       </main>
