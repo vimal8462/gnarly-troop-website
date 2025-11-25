@@ -1,4 +1,4 @@
-"use client";
+"use client"; // <<< REQUIRED FOR useState/useEffect in Next.js
 
 import { useState, useRef, useEffect } from "react";
 import { Users, Handshake, Globe, Leaf } from "lucide-react";
@@ -126,7 +126,10 @@ export default function SectionVisions() {
   }, [circleCoords]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4">
+    <div
+      id="sectionVisions"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -163,10 +166,11 @@ export default function SectionVisions() {
               const curveHeight = window.innerWidth < 1024 ? 80 : 120;
               const controlYOffset = curveHeight * (i % 2 === 0 ? -1 : 1);
 
-              const pathD = `M${coord.x},${coord.y} 
-                C ${(coord.x + next.x) / 2},${coord.y + controlYOffset} 
-                  ${(coord.x + next.x) / 2},${next.y - controlYOffset} 
-                  ${next.x},${next.y}`;
+              const pathD = `M${coord.x},${coord.y} C${
+                (coord.x + next.x) / 2
+              },${coord.y + controlYOffset} ${(coord.x + next.x) / 2},${
+                next.y - controlYOffset
+              } ${next.x},${next.y}`;
 
               return (
                 <g key={i}>
@@ -226,7 +230,7 @@ export default function SectionVisions() {
                         activeSection === item.id ? "text-blue-400" : "text-gray-800"
                       }`}
                     >
-                      {item.title}
+                      {item.title.charAt(0) + item.title.slice(1).toLowerCase()}
                     </h3>
                   </div>
                 </div>

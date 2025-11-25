@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "@/app/ministerletter.css";
+import styles from "@/app/minister-letter.module.css";
 
 export type Card = {
   id: string | number;
@@ -18,7 +18,7 @@ type Props = {
 
 export default function SectionMinisterLetter({
   cards,
-  staticImage = "/images/sections/img-globe-girl-flag.png",
+  staticImage = "/images/sections/img-globe-girl-flag-2.png",
 }: Props) {
   const FALLBACK = "/mnt/data/HorizontalBorder.png";
 
@@ -92,24 +92,29 @@ export default function SectionMinisterLetter({
   }
 
   return (
-    <section className={`sml2-root ${isAnimating ? "animating" : ""}`}>
-      <div className="sml2-grid sml2-6040">
+    <section
+      className={`${styles["sml2-root"]} ${
+        isAnimating ? styles.animating : ""
+      }`}
+    >
+      <div className={`${styles["sml2-grid"]} ${styles["sml2-6040"]}`}>
         {/* LEFT COLUMN (60%) */}
-        <div className="sml2-col sml2-left">
-          <div className="sml2-static">
+        <div className={`${styles["sml2-col"]} ${styles["sml2-left"]}`}>
+          <div className={styles["sml2-static"]}>
             <img
               src={staticImage}
-              className="sml2-static-img"
+              className={styles["sml2-static-img"]}
               onError={handleImgError}
+              alt=""
             />
           </div>
         </div>
 
         {/* RIGHT COLUMN (40%) */}
-        <div className="sml2-col sml2-right">
-          <div className="sml2-carousel" ref={viewportRef}>
+        <div className={`${styles["sml2-col"]} ${styles["sml2-right"]}`}>
+          <div className={styles["sml2-carousel"]} ref={viewportRef}>
             <div
-              className="sml2-track"
+              className={styles["sml2-track"]}
               style={{
                 width: `${trackWidth}px`,
                 transform: `translateX(${trackTranslate}px)`,
@@ -119,43 +124,44 @@ export default function SectionMinisterLetter({
             >
               {items.map((c, i) => {
                 const pos = i - index;
+                const posClass =
+                  pos === 0
+                    ? "active"
+                    : pos === -1
+                    ? "prev"
+                    : pos === 1
+                    ? "next"
+                    : "far";
 
                 return (
                   <article
                     key={c.id}
-                    className={`sml2-card ${
-                      pos === 0
-                        ? "active"
-                        : pos === -1
-                        ? "prev"
-                        : pos === 1
-                        ? "next"
-                        : "far"
-                    }`}
+                    className={`${styles["sml2-card"]} ${styles[posClass]}`}
                     style={{ width: `${cardWidth}px`, height: "490px" }}
                     onClick={() => onCardClick(i)}
                   >
-                    <div className="sml2-media">
+                    <div className={styles["sml2-media"]}>
                       <img
                         src={c.image}
                         alt={c.name}
-                        className="sml2-img"
+                        className={styles["sml2-img"]}
                         onError={handleImgError}
                       />
                     </div>
 
-                    <div className="sml2-body">
-                      <h3 className="sml2-name">{c.name}</h3>
-                      <p className="sml2-title">{c.title}</p>
+                    <div className={styles["sml2-body"]}>
+                      <h3 className={styles["sml2-name"]}>{c.name}</h3>
+                      <p className={styles["sml2-title"]}>{c.title}</p>
 
-                      <div className="sml2-footer">
+                      <div className={styles["sml2-footer"]}>
                         <a
-                          className="sml2-cert"
+                          className={styles["sml2-cert"]}
                           href={c.certificateUrl || FALLBACK}
                           target="_blank"
+                          rel="noreferrer"
                         >
                           View Certificate
-                          <span className="sml2-underline"></span>
+                          <span className={styles["sml2-underline"]}></span>
                         </a>
                       </div>
                     </div>
@@ -165,9 +171,9 @@ export default function SectionMinisterLetter({
             </div>
 
             {/* CONTROLS */}
-            <div className="sml2-controls">
+            <div className={styles["sml2-controls"]}>
               <button
-                className="sml2-arrow sml2-prev"
+                className={`${styles["sml2-arrow"]} ${styles["sml2-prev"]}`}
                 disabled={index === 0}
                 onClick={prev}
               >
@@ -175,7 +181,7 @@ export default function SectionMinisterLetter({
               </button>
 
               <button
-                className="sml2-arrow sml2-next"
+                className={`${styles["sml2-arrow"]} ${styles["sml2-next"]}`}
                 disabled={index === maxIndex}
                 onClick={next}
               >

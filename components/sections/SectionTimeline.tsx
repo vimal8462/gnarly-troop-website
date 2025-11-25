@@ -35,13 +35,16 @@ export default function Timeline() {
   const currentYear = new Date().getFullYear();
 
   const upcomingEvents = timeline.filter((e) => e.year > currentYear);
-  const recentUpcomingYear = upcomingEvents.length ? upcomingEvents[0].year : null;
+  const recentUpcomingYear = upcomingEvents.length
+    ? upcomingEvents[0].year
+    : null;
 
   const progressPercent =
-    (timeline.filter((e) => e.year <= currentYear).length / timeline.length) * 100;
+    (timeline.filter((e) => e.year <= currentYear).length / timeline.length) *
+    100;
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section id="sectionTimelines" className="relative py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-20 opacity-15">
         <img src="/images/world-map-white.png" className="w-full h-full object-cover" />
@@ -81,9 +84,12 @@ export default function Timeline() {
             const isRecentUpcoming = item.year === recentUpcomingYear;
             const isFuture = item.year > currentYear && !isRecentUpcoming;
 
-            const stylePast = "opacity-40 text-gray-500 border-gray-400 bg-gray-200";
-            const styleRecent = "border-[#FF9933] ring-4 ring-[#FF9933]/40 text-[#FF9933] animate-pulse";
-            const styleFuture = "border-blue-500 ring-2 ring-blue-300 text-blue-500";
+            const stylePast =
+              "opacity-40 text-gray-500 border-gray-400 bg-gray-200";
+            const styleRecent =
+              "border-[#FF9933] ring-4 ring-[#FF9933]/40 text-[#FF9933] animate-pulse";
+            const styleFuture =
+              "border-blue-500 ring-2 ring-blue-300 text-blue-500";
 
             return (
               <div
@@ -217,7 +223,9 @@ export default function Timeline() {
               exit={{ scale: 0.8, opacity: 0 }}
             >
               <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                <span className={`fi fi-${selected.country.toLowerCase()}`} />
+                <span
+                  className={`fi fi-${selected.country.toLowerCase()}`}
+                ></span>
                 {selected.city}
               </h3>
 
