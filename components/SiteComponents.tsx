@@ -174,7 +174,8 @@ export function Header({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const nav = DICT[lang];
+
+const nav = DICT[lang as "en" | "hi"];
 
   return (
     <header
@@ -281,7 +282,8 @@ export function Hero({
     setCurrent((i + slides.length) % slides.length);
   }
 
-  const D = DICT[lang];
+
+  const D = DICT[lang as "en" | "hi"];
 
   return (
     <section
@@ -483,7 +485,8 @@ export function Hero({
    Events
    ===================== */
 export function Events({ lang }: { lang: string }) {
-  const D = DICT[lang];
+  const D = DICT[lang as "en" | "hi"];
+
   const trackRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const [index, setIndex] = useState(0);
@@ -597,7 +600,8 @@ export function Gallery({
   lang: string;
   onOpenModal: (src: string) => void;
 }) {
-  const D = DICT[lang];
+
+const D = DICT[lang as "en" | "hi"];
 
   const items = [
     {
@@ -658,7 +662,8 @@ export function Gallery({
    Team
    ===================== */
 export function Team({ lang }: { lang: string }) {
-  const D = DICT[lang];
+  const D = DICT[lang as "en" | "hi"];
+  
   return (
     <section className="reveal" aria-labelledby="teamTitle">
       <h3 id="teamTitle" data-key="team_title">
