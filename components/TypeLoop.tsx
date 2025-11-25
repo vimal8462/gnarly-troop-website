@@ -78,9 +78,7 @@ export default function TypeLoop({
           verticalAlign: "bottom",
           animation: "blink 1s steps(2,start) infinite",
         }}
-      >
-        |
-      </span>
+      ></span>
 
       <style jsx>{`
         @keyframes blink {
