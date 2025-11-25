@@ -3,7 +3,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const timeline = [
+// -------------------------------
+// ✔ TYPE FOR TIMELINE ITEMS
+// -------------------------------
+type TimelineItem = {
+  year: number;
+  country: string;
+  city: string;
+  details: string;
+};
+
+// -------------------------------
+// ✔ TIMELINE DATA (WITH TYPE)
+// -------------------------------
+const timeline: TimelineItem[] = [
   { year: 2022, country: "IN", city: "NEW DELHI", details: "Event hosted in New Delhi, India." },
   { year: 2023, country: "NP", city: "KATHMANDU & NEW DELHI", details: "Cross-border Nepal–India cultural exchange." },
   { year: 2024, country: "IN", city: "NOIDA & JAIPUR", details: "Multiple youth leadership programs." },
@@ -14,24 +27,24 @@ const timeline = [
   { year: 2029, country: "IT", city: "ROME & NEW DELHI", details: "European youth exchange delegation." },
 ];
 
+// -------------------------------
+// ✔ MAIN COMPONENT
+// -------------------------------
 export default function Timeline() {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<TimelineItem | null>(null);
   const currentYear = new Date().getFullYear();
 
-  const upcomingEvents = timeline.filter(e => e.year > currentYear);
+  const upcomingEvents = timeline.filter((e) => e.year > currentYear);
   const recentUpcomingYear = upcomingEvents.length ? upcomingEvents[0].year : null;
 
   const progressPercent =
-    (timeline.filter(e => e.year <= currentYear).length / timeline.length) * 100;
+    (timeline.filter((e) => e.year <= currentYear).length / timeline.length) * 100;
 
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-20 opacity-15">
-        <img
-          src="/images/world-map-white.png"
-          className="w-full h-full object-cover"
-        />
+        <img src="/images/world-map-white.png" className="w-full h-full object-cover" />
       </div>
 
       <h2 className="text-3xl font-bold text-center mb-10">Global Timeline</h2>
@@ -61,6 +74,7 @@ export default function Timeline() {
           </motion.div>
         </div>
 
+        {/* Timeline Nodes */}
         <div className="flex justify-between items-start min-w-[1000px] pt-6 pb-10 relative z-10">
           {timeline.map((item, i) => {
             const isPast = item.year < currentYear;
@@ -77,6 +91,7 @@ export default function Timeline() {
                 className="flex flex-col items-center cursor-pointer group"
                 onClick={() => setSelected(item)}
               >
+                {/* Year */}
                 <span
                   className={`text-lg font-semibold mb-2 ${
                     isPast
@@ -89,6 +104,7 @@ export default function Timeline() {
                   {item.year}
                 </span>
 
+                {/* Flag Circle */}
                 <motion.div
                   whileHover={{ scale: isPast ? 1 : 1.2 }}
                   transition={{ type: "spring", stiffness: 200 }}
@@ -112,15 +128,16 @@ export default function Timeline() {
                       transition={{ repeat: Infinity, duration: 2 }}
                     />
                   )}
+
                   <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
-                    <span
-                      className={`fi fi-${item.country.toLowerCase()} w-full h-full rounded-full`}
-                    />
+                    <span className={`fi fi-${item.country.toLowerCase()} w-full h-full rounded-full`} />
                   </div>
                 </motion.div>
 
+                {/* Line connecting dot */}
                 <div className="w-px h-6 border-l-2 border-dotted border-gray-400 mt-2 mb-2" />
 
+                {/* Small Dot */}
                 <motion.div
                   className={`-mt-1 w-3.5 h-3.5 rounded-full border-4 border-white shadow ${
                     isPast
@@ -130,11 +147,10 @@ export default function Timeline() {
                       : "bg-blue-500"
                   }`}
                   animate={isRecentUpcoming ? { scale: [1, 1.2, 1] } : {}}
-                  transition={
-                    isRecentUpcoming ? { repeat: Infinity, duration: 1.5 } : {}
-                  }
+                  transition={isRecentUpcoming ? { repeat: Infinity, duration: 1.5 } : {}}
                 />
 
+                {/* City Labels */}
                 <div className="text-center mt-3">
                   <div
                     className={`font-bold text-sm ${
@@ -162,6 +178,7 @@ export default function Timeline() {
                     </div>
                   )}
 
+                  {/* Upcoming Label */}
                   {!isPast && (
                     <div
                       className={`mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${
@@ -180,6 +197,9 @@ export default function Timeline() {
         </div>
       </div>
 
+      {/* --------------------------------------------- */}
+      {/* MODAL POPUP WITH DETAILS */}
+      {/* --------------------------------------------- */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -197,7 +217,7 @@ export default function Timeline() {
               exit={{ scale: 0.8, opacity: 0 }}
             >
               <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
-                <span className={`fi fi-${selected.country.toLowerCase()}`}></span>
+                <span className={`fi fi-${selected.country.toLowerCase()}`} />
                 {selected.city}
               </h3>
 

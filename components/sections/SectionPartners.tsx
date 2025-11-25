@@ -1,10 +1,17 @@
 "use client";
 import React from "react";
 
+type Partner = {
+  img: string;
+  text: string;
+};
+
 export default function SectionPartners() {
-  const partners = [
-    /* {img, text} */
+  const partners: Partner[] = [
+    // { img: "/images/p1.jpg", text: "Partner 1" },
+    // { img: "/images/p2.jpg", text: "Partner 2" },
   ];
+
   return (
     <section id="partners" className="reveal">
       <h3>Partners</h3>
