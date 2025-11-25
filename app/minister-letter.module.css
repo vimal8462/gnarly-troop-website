@@ -5,12 +5,12 @@
   --gap: 20px;
 } */
 
-:root {
-  --accent: #e84a2d;
+/* :root {
+  
   --pink: #ff4f91;
   --orange: #f6a623;
   --blue: #3f8efc;
-}
+} */
 /* root container */
 .sml2-root {
   width: 100%;
@@ -76,7 +76,7 @@
 /* Card base */
 .sml2-card {
   box-sizing: border-box;
-  background: var(--card-bg);
+  background: var(--card);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
@@ -165,7 +165,7 @@
   display: block;
   width: 56px;
   height: 3px;
-  background: var(--accent);
+  background: var(--accent-2);
   border-radius: 3px;
   margin-left: 10px;
 }
@@ -191,8 +191,8 @@
   height: 52px;
   border-radius: 999px;
   border: 0;
-  background: #154ab1;
-  color: #fff;
+  background: var(--accent);
+  color: var(--light-text);
   font-size: 26px;
   display: inline-flex;
   align-items: center;
