@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "@/app/partners.module.css";
 
 type Partner = {
@@ -206,10 +206,10 @@ export default function SectionCarousel({
                   <h3 className={styles.name}>{p.name}</h3>
                 </div>
                 <div className={styles.logoWrap}>
-                  <Image
+                  <img
                     src={p.logo}
                     alt={p.name}
-                    width={140}
+                    width={500}
                     height={90}
                     className={styles.logo}
                   />
