@@ -8,7 +8,7 @@ import SectionMinistries from "@/components/sections/SectionMinistries";
 import SectionSchedules from "@/components/sections/SectionSchedules";
 import SectionPartners from "@/components/sections/SectionPartners";
 import SectionFooter from "@/components/sections/SectionFooter";
-import SectionSchedules2 from "@/components/sections/SectionSchedules2";
+import SectionSchedules2 from "@/components/sections/SectionSchedules3";
 
 const ministerCards = [
   {
