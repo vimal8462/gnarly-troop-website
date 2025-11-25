@@ -133,9 +133,9 @@ export default function SectionVisions() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 border-t-2 border-b-2 border-gray-300 py-4 px-8 inline-block">
+          <h4 className="text-2xl md:text-3xl font-bold text-gray-800 border-t-2 border-b-2 border-gray-300 py-4 px-8 inline-block">
             4C's Vision of Gnarly Troop
-          </h1>
+          </h4>
         </div>
 
         {/* Circles + Pipes */}
@@ -145,7 +145,13 @@ export default function SectionVisions() {
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
           >
             <defs>
-              <linearGradient id="pipe3DGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient
+                id="pipe3DGradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="#c7d2fe" />
                 <stop offset="50%" stopColor="#3b82f6" />
                 <stop offset="100%" stopColor="#1e40af" />
@@ -202,7 +208,10 @@ export default function SectionVisions() {
 
           {/* Circles */}
           {visionData.map((item) => (
-            <div key={item.id} className="relative z-10 flex justify-center my-4 lg:my-0 lg:flex-1">
+            <div
+              key={item.id}
+              className="relative z-10 flex justify-center my-4 lg:my-0 lg:flex-1"
+            >
               <button
                 onClick={() => handleCircleClick(item.id)}
                 className="circle-btn relative transition-all duration-500 ease-out"
@@ -219,7 +228,9 @@ export default function SectionVisions() {
                   <div className="text-center">
                     <div
                       className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto mb-2 transition-all duration-500 ${
-                        activeSection === item.id ? "bg-blue-500 scale-110" : "bg-blue-400"
+                        activeSection === item.id
+                          ? "bg-blue-500 scale-110"
+                          : "bg-blue-400"
                       }`}
                     >
                       <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
@@ -227,7 +238,9 @@ export default function SectionVisions() {
 
                     <h3
                       className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
-                        activeSection === item.id ? "text-blue-400" : "text-gray-800"
+                        activeSection === item.id
+                          ? "text-blue-400"
+                          : "text-gray-800"
                       }`}
                     >
                       {item.title.charAt(0) + item.title.slice(1).toLowerCase()}
