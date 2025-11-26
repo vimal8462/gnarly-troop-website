@@ -11,43 +11,54 @@
   font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 /* -------------------------------
-   UPDATED: SECTIONS → CAROUSEL
+   SECTION CAROUSEL (Improved)
 --------------------------------*/
 .sectionsCarouselWrapper {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: 25px;
 }
 
 /* horizontal scroll area */
 .sectionsCarousel {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
+  padding: 6px 4px 14px;
+  scrollbar-width: none;
 }
 
 .sectionsCarousel::-webkit-scrollbar {
   display: none;
 }
 
-/* arrows – hidden on mobile */
+/* arrows */
 .carouselArrowLeft,
 .carouselArrowRight {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.92);
   border: 1px solid rgba(0,0,0,0.08);
-  width: 44px;
-  height: 60px;
-  font-size: 28px;
+  width: 46px;
+  height: 64px;
+  font-size: 30px;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 12px;
   display: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  transition: all .2s ease;
+}
+
+.carouselArrowLeft:hover,
+.carouselArrowRight:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.16);
 }
 
 @media (min-width: 768px) {
@@ -63,33 +74,32 @@
 }
 
 /* -----------------------------------
-   SECTION CARDS (unchanged)
+   SECTION CARDS (improved hover & spacing)
 ------------------------------------*/
 .sectionCard {
-  min-width: 240px;   /* REQUIRED for carousel */
+  min-width: 240px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.06);
-  transition: transform .18s ease, box-shadow .18s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
   cursor: pointer;
-  padding: 0;
 }
 
 .sectionCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.10);
 }
 
 .cardImageWrap {
   width: 100%;
-  height: 160px;
+  height: 165px;
   overflow: hidden;
-  background: #f6f6f6;
+  background: #f8f8f8;
 }
 
 .cardImage {
@@ -100,36 +110,40 @@
 }
 
 .cardMeta {
-  padding: 12px 14px;
+  padding: 14px 16px;
   text-align: left;
 }
 
 .cardTitle {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .cardCount {
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #555;
+  color: #666;
 }
 
-/* ------------------------------------------------------------------
-   EVERYTHING BELOW THIS LINE IS YOUR ORIGINAL CSS (UNCHANGED)
--------------------------------------------------------------------*/
 
-/* modal / overlay */
+/* --------------------------------------------------
+   MODAL / OVERLAY (enhanced density + shadows)
+---------------------------------------------------*/
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(10,10,10,0.6);
+  background: rgba(0,0,0,0.60);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1200;
   padding: 20px;
+  animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
 }
 
 .modal {
@@ -137,11 +151,17 @@
   max-width: 1100px;
   max-height: 92vh;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  animation: scaleIn .22s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(.92); opacity:.7; }
+  to { transform: scale(1); opacity:1; }
 }
 
 .modalHeader {
@@ -150,127 +170,151 @@
   align-items: center;
   padding: 14px 18px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: #fafafa;
 }
 
 .modalHeader h3 {
   margin: 0;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .modalActions {
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
 }
 
 .modalCount {
-  font-size:0.95rem;
+  font-size:0.96rem;
   color:#333;
   opacity:0.9;
 }
 
 .closeBtn {
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 1.1rem;
   cursor: pointer;
-  padding: 6px 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all .18s ease;
 }
 
+.closeBtn:hover {
+  background:#111;
+  color:#fff;
+}
+
+/* modal body */
 .modalBody {
   padding: 14px;
   overflow: auto;
   flex: 1 1 auto;
 }
 
+/* grid / thumbnail view */
 .gridButtons {
   display:flex;
   gap:10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .gridButtons button {
   border: 1px solid rgba(0,0,0,0.06);
-  background: #fff;
-  padding: 6px 10px;
+  background: #c7ddee;
+  padding: 7px 12px;
   border-radius: 8px;
   cursor: pointer;
+  transition: all .18s ease;
+}
+
+.gridButtons button:hover {
+  background:#91a9eb;
 }
 
 .activeViewBtn {
   background: #111;
   color: #fff;
-  border-color: transparent;
+  border-color: #111;
 }
 
 .imageGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .gridItem {
   background: #eee;
   border-radius: 8px;
   overflow: hidden;
-  border: none;
-  padding: 0;
   cursor: pointer;
+  border: none;
 }
 
 .gridThumb {
   width: 100%;
-  height: 120px;
+  height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform .18s ease;
+  transition: transform .2s ease;
 }
 
 .gridItem:hover .gridThumb {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
+/* carousel view */
 .carouselWrap {
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   height: 100%;
 }
 
-.carouselNavLeft, .carouselNavRight {
+.carouselNavLeft,
+.carouselNavRight {
   background: rgba(255,255,255,0.95);
   border:none;
   font-size: 2.2rem;
-  padding: 6px 10px;
-  border-radius: 10px;
+  padding: 6px 12px;
+  border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: all .18s ease;
+}
+
+.carouselNavLeft:hover,
+.carouselNavRight:hover {
+  transform: scale(1.06);
 }
 
 .carouselViewport {
   flex: 1 1 auto;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
 }
 
 .carouselImageWrap {
   width: 100%;
-  height: 60vh;
-  max-height: 68vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  height: 70%;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carouselImage {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
+  width: 100%;          /* fill entire width */
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  padding: 0;
 }
 
 .carouselFooter {
@@ -279,7 +323,7 @@
   display:flex;
   justify-content: space-between;
   align-items:center;
-  padding: 0 6px;
+  padding: 0 8px;
 }
 
 .backToGrid {
@@ -287,6 +331,11 @@
   background: transparent;
   cursor: pointer;
   color: #111;
+  font-size: 0.95rem;
+}
+
+.backToGrid:hover {
+  text-decoration: underline;
 }
 
 .carouselCounter {
