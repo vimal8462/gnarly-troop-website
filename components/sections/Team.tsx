@@ -23,7 +23,7 @@ export default function TeamPage() {
         <section className={styles.heroSection}>
           <div className={styles.videoBox}>
             <iframe
-              src="videos/hirarchy.mp4"
+              src="/videos/hirarchy.mp4"
               className={styles.video}
               allowFullScreen
             ></iframe>
