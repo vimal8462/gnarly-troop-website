@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/app/headers.module.css";
+import { useRouter } from "next/router";
 
 type MenuItem = {
   id: string;
@@ -233,38 +234,7 @@ export default function Header() {
   }, []);
 
   /* ---------------------------
-<<<<<<< HEAD
-     Smooth Scroll
-  ---------------------------- */
-  const scrollToId = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    const offset = 100;
-    const rect = el.getBoundingClientRect();
-    const pos = rect.top + window.scrollY - offset;
-
-    window.scrollTo({ top: pos, behavior: "smooth" });
-  };
-
-  // ← FIX: set active on click so mobile immediately reflects selection
-  const onMenuClick = (id: string) => {
-    // setActive(id); // set active immediately
-    // scrollToId(id);
-    if (id === "registration") {
-      router.push("/registration"); // navigate to registration page
-    } else {
-      setActive(id);
-      scrollToId(id);
-    }
-    setMobileOpen(false);
-  };
-
-  /* ---------------------------
-     Swipe-to-close mobile panel
-=======
      Swipe-to-close mobile panel (unchanged)
->>>>>>> 71d8a007b16e03b5ead3d51be03a3153d58c14ec
   ---------------------------- */
   useEffect(() => {
     const panel = panelRef.current;
