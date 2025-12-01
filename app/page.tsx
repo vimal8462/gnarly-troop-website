@@ -3,13 +3,12 @@ import SectionHeroVideo from "@/components/sections/SectionHeroVideo";
 import SectionAbout from "@/components/sections/SectionAbout";
 import SectionVisions from "@/components/sections/SectionVisions";
 import SectionTimeline from "@/components/sections/SectionTimeline";
-import SectionScrollingImages from "@/components/sections/SectionScrollingImages";
-import SectionSummit from "@/components/sections/SectionSummit";
-import SectionExplore from "@/components/sections/SectionExplore";
-import SectionPartners from "@/components/sections/SectionPartners";
-import SectionGallery from "@/components/sections/SectionGallery";
-import Footer from "@/components/sections/Footer";
 import SectionMinisterLetter from "@/components/sections/SectionMinisterLetter";
+import SectionMinistries from "@/components/sections/SectionMinistries";
+import SectionPartners from "@/components/sections/SectionPartners";
+import SectionFooter from "@/components/sections/SectionFooter";
+import SectionSchedules from "@/components/sections/SectionSchedules";
+import SectionGallery from "@/components/sections/SectionGallery";
 
 const ministerCards = [
   {
@@ -18,7 +17,7 @@ const ministerCards = [
     title: "Hon'ble Union Minister of Culture & Tourism | Govt of India",
     image: "/images/crousel/ministers/img-shri-gajendra-singh-shekhawat.png",
     certificateUrl:
-      "/images/crousel/letters/img-letter-gajendra-singh-shekhawat.png",
+      "/images/crousel/letters/img-letter-gajendra-singh-shekhawat.jpg",
   },
   {
     id: 2,
@@ -38,7 +37,8 @@ const ministerCards = [
     id: 4,
     name: "Swami Balmukundacharya Ji Maharaj",
     title: "Hon'ble Member of the Legislative Assembly Rajasthan",
-    image: "/images/crousel/minister/img-swami-balmukundacharya-ji-maharaj.png",
+    image:
+      "/images/crousel/ministers/img-swami-balmukundacharya-ji-maharaj.png",
     certificateUrl: "/images/crousel/letters/img-letter-balmukundacharya.png",
   },
 ];
@@ -56,11 +56,17 @@ export default function Page() {
       <main>
         <SectionAbout />
         <SectionMinisterLetter
-          staticImage="/images/sections/img-globe-girl-flag.png"
+          staticImage="/images/sections/img-globe-girl-flag-2.png"
           cards={ministerCards}
         />
-        <SectionTimeline/>
-        <SectionVisions /> 
+        <SectionTimeline />
+        <SectionVisions />
+        <SectionMinistries />
+        {/* <SectionSchedules /> */}
+        <SectionSchedules />
+        <SectionPartners />
+        <SectionGallery/>
+        <SectionFooter />
       </main>
     </>
   );

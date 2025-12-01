@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
-module.exports = {
   devIndicators: false,
+  output: "export", // enables static export
+  trailingSlash: true
 };
 
 export default nextConfig;

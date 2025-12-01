@@ -1,65 +1,94 @@
 "use client";
-import React, { useRef, useState } from "react";
 
-export default function SectionGallery() {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const imageTrack = useRef<HTMLDivElement | null>(null);
+import React, { useState } from "react";
+import PopupLightbox from "./PopupLightbox";
+import styles from "@/app/gallery.module.css";
 
-  function onVideoPlay(id: string) {
-    setActiveVideo(id);
-    // pause image slider auto-play: you can store interval and clear it; here we just add a paused class
-    imageTrack.current?.classList.add("paused");
-  }
-  function onVideoPause() {
-    setActiveVideo(null);
-    imageTrack.current?.classList.remove("paused");
-  }
+type Section = {
+  id: string; // folder slug
+  title: string;
+  count: number;
+  cover?: string;
+};
 
-  const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
-  const videos = ["/vid1.mp4", "/vid2.mp4"];
+// YOUR SECTIONS
+const sections: Section[] = [
+
+  { id: "climate", title: "Climate Excellence", count: 1 },
+  { id: "community", title: "Community Engagement", count: 1 },
+  { id: "cultural", title: "Cultural Excellence", count: 1 },
+  { id: "cooperation", title: "Cooperation Excellence", count: 2 },
+  { id: "sports", title: "Sports & Adventure", count: 2 },
+  { id: "youth", title: "Youth Program", count: 2 },
+  { id: "globalmeet", title: "Global Meet", count: 2 },
+  { id: "countryshowcase", title: "Country Showcase", count: 2 },
+  { id: "education", title: "Education & Innovation", count: 2 },
+];
+
+export default function GallerySections() {
+  const [openSection, setOpenSection] = useState<Section | null>(null);
+
+  const scrollLeft = () => {
+    const el = document.getElementById("sectionsCarousel");
+    el?.scrollBy({ left: -300, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    const el = document.getElementById("sectionsCarousel");
+    el?.scrollBy({ left: 300, behavior: "smooth" });
+  };
 
   return (
-    <section id="gallery" aria-labelledby="galleryTitle">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <div>
-          <h3 id="galleryTitle">Gallery</h3>
-          <div ref={imageTrack} className="image-track">
-            {images.map((src, i) => (
-              <div key={i} className="gallery-item">
-                <img src={src} alt={`Image ${i + 1}`} />
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 8 }}>
-            <a href="/gallery" className="btn btn-light">
-              View All Images
-            </a>
-          </div>
+    <section className={styles.galleryWrapper} aria-label="Gallery sections">
+      <h2 className={styles.pageHeading}>Gallery</h2>
+
+      {/* CAROUSEL WRAPPER */}
+      <div className={styles.sectionsCarouselWrapper}>
+        <button className={styles.carouselArrowLeft} onClick={scrollLeft}>
+          ‹
+        </button>
+
+        {/* HORIZONTAL SCROLLABLE LIST */}
+        <div id="sectionsCarousel" className={styles.sectionsCarousel}>
+          {sections.map((s) => {
+            const cover =
+              s.cover ?? `/images/gallery/${s.id}/1.jpg`;
+
+            return (
+              <button
+                key={s.id}
+                className={styles.sectionCard}
+                onClick={() => setOpenSection(s)}
+              >
+                <div className={styles.cardImageWrap}>
+                  <img
+                    src={cover}
+                    alt={s.title}
+                    className={styles.cardImage}
+                  />
+                </div>
+
+                <div className={styles.cardMeta}>
+                  <h3 className={styles.cardTitle}>{s.title}</h3>
+                  <p className={styles.cardCount}>{s.count} Images</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        <div>
-          <h3>Videos</h3>
-          <div className="video-track">
-            {videos.map((src, i) => (
-              <div key={i} style={{ marginBottom: 12 }}>
-                <video
-                  width="100%"
-                  controls
-                  onPlay={() => onVideoPlay(src)}
-                  onPause={() => onVideoPause()}
-                  onEnded={() => onVideoPause()}
-                  src={src}
-                />
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 8 }}>
-            <a href="/gallery" className="btn btn-light">
-              View All Videos
-            </a>
-          </div>
-        </div>
+        <button className={styles.carouselArrowRight} onClick={scrollRight}>
+          ›
+        </button>
       </div>
+
+      {/* POPUP */}
+      {openSection && (
+        <PopupLightbox
+          section={openSection}
+          onClose={() => setOpenSection(null)}
+        />
+      )}
     </section>
   );
 }

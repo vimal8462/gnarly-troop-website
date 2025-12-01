@@ -1,15 +1,34 @@
-"use client";                      // <<< REQUIRED FOR useState/useEffect in Next.js
+"use client"; // <<< REQUIRED FOR useState/useEffect in Next.js
 
 import { useState, useRef, useEffect } from "react";
 import { Users, Handshake, Globe, Leaf } from "lucide-react";
 
-export default function GnarlyTroopVision() {
-  const [activeSection, setActiveSection] = useState(null);
-  const svgRef = useRef(null);
-  const [circleCoords, setCircleCoords] = useState([]);
-  const pipeRefs = useRef([]);
+type VisionId = "climate" | "community" | "culture" | "cooperation";
 
-  const visionData = [
+interface VisionItem {
+  id: VisionId;
+  title: string;
+  icon: any;
+  image: string;
+  description: string;
+}
+
+interface Coord {
+  x: number;
+  y: number;
+}
+
+export default function SectionVisions() {
+  const [activeSection, setActiveSection] = useState<VisionId | null>(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  const [circleCoords, setCircleCoords] = useState<Coord[]>([]);
+  const pipeRefs = useRef<(SVGPathElement | null)[]>([]);
+
+  // --------------------------
+  // Vision Data
+  // --------------------------
+  const visionData: VisionItem[] = [
     {
       id: "climate",
       title: "CLIMATE",
@@ -48,17 +67,22 @@ export default function GnarlyTroopVision() {
     },
   ];
 
-  const handleCircleClick = (id) =>
+  // --------------------------
+  // Click Handler
+  // --------------------------
+  const handleCircleClick = (id: VisionId) =>
     setActiveSection(activeSection === id ? null : id);
 
-  // Calculate center coords
+  // --------------------------
+  // Get circle positions
+  // --------------------------
   const calculateCircleCoords = () => {
     if (!svgRef.current) return;
 
     const circles = document.querySelectorAll(".circle-btn");
     const coords = Array.from(circles).map((c) => {
       const rect = c.getBoundingClientRect();
-      const parentRect = svgRef.current.getBoundingClientRect();
+      const parentRect = svgRef.current!.getBoundingClientRect();
       return {
         x: rect.left + rect.width / 2 - parentRect.left,
         y: rect.top + rect.height / 2 - parentRect.top,
@@ -71,21 +95,26 @@ export default function GnarlyTroopVision() {
   useEffect(() => {
     calculateCircleCoords();
     window.addEventListener("resize", calculateCircleCoords);
-    return () =>
-      window.removeEventListener("resize", calculateCircleCoords);
+    return () => window.removeEventListener("resize", calculateCircleCoords);
   }, []);
 
-  // liquid animation
+  // --------------------------
+  // Liquid animation
+  // --------------------------
   useEffect(() => {
-    let animationFrame;
+    let animationFrame: number;
+
     const animate = () => {
       pipeRefs.current.forEach((path) => {
         if (path) {
           const length = path.getTotalLength();
           path.style.strokeDasharray = `${length / 2} ${length / 2}`;
-          const offset = parseFloat(path.dataset.offset || 0) - 3;
-          path.dataset.offset = offset;
-          path.style.strokeDashoffset = offset;
+
+          const prev = parseFloat(path.dataset.offset || "0");
+          const offset = prev - 3; // moving animation
+
+          path.dataset.offset = offset.toString();
+          path.style.strokeDashoffset = offset.toString();
         }
       });
 
@@ -97,13 +126,16 @@ export default function GnarlyTroopVision() {
   }, [circleCoords]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4">
+    <div
+      id="sectionVisions"
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 border-t-2 border-b-2 border-gray-300 py-4 px-8 inline-block">
+          <h4 className="text-2xl md:text-3xl font-bold text-gray-800 border-t-2 border-b-2 border-gray-300 py-4 px-8 inline-block">
             4C's Vision of Gnarly Troop
-          </h1>
+          </h4>
         </div>
 
         {/* Circles + Pipes */}
@@ -125,35 +157,30 @@ export default function GnarlyTroopVision() {
                 <stop offset="100%" stopColor="#1e40af" />
               </linearGradient>
 
-              <linearGradient
-                id="liquidFlow"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
+              <linearGradient id="liquidFlow" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#60a5fa" />
                 <stop offset="50%" stopColor="#3b82f6" />
                 <stop offset="100%" stopColor="#60a5fa" />
               </linearGradient>
             </defs>
 
+            {/* Draw pipes */}
             {circleCoords.map((coord, i) => {
               if (i === circleCoords.length - 1) return null;
 
               const next = circleCoords[i + 1];
               const curveHeight = window.innerWidth < 1024 ? 80 : 120;
-              const controlYOffset =
-                curveHeight * (i % 2 === 0 ? -1 : 1);
+              const controlYOffset = curveHeight * (i % 2 === 0 ? -1 : 1);
 
               const pathD = `M${coord.x},${coord.y} C${
                 (coord.x + next.x) / 2
-              },${coord.y + controlYOffset} ${
-                (coord.x + next.x) / 2
-              },${next.y - controlYOffset} ${next.x},${next.y}`;
+              },${coord.y + controlYOffset} ${(coord.x + next.x) / 2},${
+                next.y - controlYOffset
+              } ${next.x},${next.y}`;
 
               return (
                 <g key={i}>
+                  {/* Pipe outer */}
                   <path
                     d={pathD}
                     stroke="url(#pipe3DGradient)"
@@ -162,8 +189,11 @@ export default function GnarlyTroopVision() {
                     strokeLinecap="round"
                   />
 
+                  {/* Liquid animated line */}
                   <path
-                    ref={(el) => (pipeRefs.current[i] = el)}
+                    ref={(el) => {
+                      pipeRefs.current[i] = el;
+                    }}
                     d={pathD}
                     stroke="url(#liquidFlow)"
                     strokeWidth="10"
@@ -192,9 +222,7 @@ export default function GnarlyTroopVision() {
                       ? "border-blue-400 shadow-2xl"
                       : "border-dashed border-gray-300 shadow-lg"
                   } flex items-center justify-center bg-white transition-all duration-500 cursor-pointer ${
-                    activeSection === item.id
-                      ? "animate-pulse-slow"
-                      : ""
+                    activeSection === item.id ? "animate-pulse-slow" : ""
                   }`}
                 >
                   <div className="text-center">
@@ -207,6 +235,7 @@ export default function GnarlyTroopVision() {
                     >
                       <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                     </div>
+
                     <h3
                       className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
                         activeSection === item.id
@@ -214,8 +243,7 @@ export default function GnarlyTroopVision() {
                           : "text-gray-800"
                       }`}
                     >
-                      {item.title.charAt(0) +
-                        item.title.slice(1).toLowerCase()}
+                      {item.title.charAt(0) + item.title.slice(1).toLowerCase()}
                     </h3>
                   </div>
                 </div>
@@ -243,9 +271,7 @@ export default function GnarlyTroopVision() {
             >
               <div
                 className={`text-white text-center py-3 font-bold text-sm uppercase tracking-wider transition-colors duration-300 ${
-                  activeSection === item.id
-                    ? "bg-blue-500"
-                    : "bg-blue-400"
+                  activeSection === item.id ? "bg-blue-500" : "bg-blue-400"
                 }`}
               >
                 {item.title}
