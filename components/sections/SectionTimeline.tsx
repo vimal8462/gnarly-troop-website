@@ -1,23 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const timeline = [
-  { year: 2022, country: "IN", city: "NEW DELHI", details: "Event hosted in New Delhi, India." },
-  { year: 2023, country: "NP", city: "KATHMANDU & NEW DELHI", details: "Cross-border Nepal–India cultural exchange." },
-  { year: 2024, country: "IN", city: "NOIDA & JAIPUR", details: "Multiple youth leadership programs." },
-  { year: 2025, country: "IN", city: "NEW DELHI & SIKKIM", details: "Summits held in Delhi and NE India." },
-  { year: 2026, country: "GB", city: "LONDON & NEW DELHI", details: "Global cultural leadership summit." },
-  { year: 2027, country: "AE", city: "DUBAI & NEW DELHI", details: "Middle East partnership expansion." },
-  { year: 2028, country: "US", city: "CHICAGO & NEW DELHI", details: "United States collaboration program." },
-  { year: 2029, country: "IT", city: "ROME & NEW DELHI", details: "European youth exchange delegation." },
-];
+// const timeline = [
+//   { year: 2022, country: "IN", city: "NEW DELHI", details: "Event hosted in New Delhi, India." },
+//   { year: 2023, country: "NP", city: "KATHMANDU & NEW DELHI", details: "Cross-border Nepal–India cultural exchange." },
+//   { year: 2024, country: "IN", city: "NOIDA & JAIPUR", details: "Multiple youth leadership programs." },
+//   { year: 2025, country: "IN", city: "NEW DELHI & SIKKIM", details: "Summits held in Delhi and NE India." },
+//   { year: 2026, country: "GB", city: "LONDON & NEW DELHI", details: "Global cultural leadership summit." },
+//   { year: 2027, country: "AE", city: "DUBAI & NEW DELHI", details: "Middle East partnership expansion." },
+//   { year: 2028, country: "US", city: "CHICAGO & NEW DELHI", details: "United States collaboration program." },
+//   { year: 2029, country: "IT", city: "ROME & NEW DELHI", details: "European youth exchange delegation." },
+// ];
 
 export default function Timeline() {
   const [selected, setSelected] = useState(null);
   const currentYear = new Date().getFullYear();
+  const [timeline, setTimeline] = useState([]);
+   const [loading, setLoading] = useState(true);
+   useEffect(() => {
+    async function getTimeline() {
+      try {
+        const res = await fetch("/api/timeline");
+        const data = await res.json();
+        setTimeline(data);
+      } catch (err) {
+        console.error("Error loading timeline", err);
+      } finally {
+        setLoading(false);
+      }
+    }
 
+    getTimeline();
+  }, []);
   const upcomingEvents = timeline.filter(e => e.year > currentYear);
   const recentUpcomingYear = upcomingEvents.length ? upcomingEvents[0].year : null;
 
