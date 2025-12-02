@@ -28,6 +28,7 @@ export default function VersionPage() {
         const formData = new FormData(e.target);
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
+        const icon = formData.get("icon") as string;
         const file = formData.get("file") as File;
         const status = formData.get("status") as string;
 
@@ -42,10 +43,23 @@ export default function VersionPage() {
             alert("Description is required!");
             return;
         }
-
+        if (!icon || icon.trim().length === 0) {
+            alert("Icon is required!");
+            return;
+        }
         if (!file || file.size === 0) {
             alert("Image file is required!");
             return;
+        }
+         if (file) {
+            const allowed = ["jpg", "jpeg", "png", "gif"];
+
+            const ext = file.name.split(".").pop()?.toLowerCase();
+
+            if (!allowed.includes(ext || "")) {
+                alert("Invalid file type! Only JPG, PNG, GIF,JPEG allowed.");
+                return;
+            }
         }
         const uploadData = new FormData();
         uploadData.append("file", file);
@@ -65,6 +79,7 @@ export default function VersionPage() {
             method: "POST",
             body: JSON.stringify({
                 title,
+                icon,
                 description,
                 image: imageUrl,
                 status,
@@ -82,6 +97,7 @@ export default function VersionPage() {
         const newVision = {
             id: saveJson.id ?? visions.length + 1, // from DB or fallback
             title,
+            icon,
             description,
             image: imageUrl,
             status,
@@ -98,6 +114,7 @@ export default function VersionPage() {
 
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
+        const icon = formData.get("icon") as string;
         const file = formData.get("file") as File;
         const status = formData.get("status") as string;
 
@@ -111,12 +128,25 @@ export default function VersionPage() {
             alert("Description is required!");
             return;
         }
+         if (!icon || icon.trim().length === 0) {
+            alert("Icon is required!");
+            return;
+        }
 
         // Start with existing image
         let imageUrl = selectedVision.image;
 
         // === Optional image upload ===
         if (file && file.size > 0) {
+
+            const allowed = ["jpg", "jpeg", "png", "gif"];
+
+            const ext = file.name.split(".").pop()?.toLowerCase();
+
+            if (!allowed.includes(ext || "")) {
+                alert("Invalid file type! Only JPG, PNG, GIF,JPEG allowed.");
+                return;
+            }
             const uploadData = new FormData();
             uploadData.append("file", file);
 
@@ -144,6 +174,7 @@ export default function VersionPage() {
             },
             body: JSON.stringify({
                 title,
+                icon,
                 description,
                 image: imageUrl,
                 status,
@@ -214,6 +245,7 @@ export default function VersionPage() {
                         <tr>
                             <th className="p-3 text-left">ID</th>
                             <th className="p-3 text-left">Title</th>
+                            <th className="p-3 text-left">Icon</th>
                             <th className="p-3 text-left">Description</th>
                             <th className="p-3 text-left">Image</th>
                             <th className="p-3 text-left">Status</th>
@@ -226,6 +258,7 @@ export default function VersionPage() {
                             <tr key={vision.id} className="border-b hover:bg-gray-50">
                                 <td className="p-3">{vision.id}</td>
                                 <td className="p-3">{vision.title}</td>
+                                <td className="p-3">{vision.icon}</td>
                                 <td className="p-3">{vision.description}</td>
                                 <td className="p-3"><img src={vision.image} width="100"height="100"/></td>
                                 <td className="p-3">
@@ -285,6 +318,16 @@ export default function VersionPage() {
                                 defaultValue={selectedVision?.title}
                             />
                         </label>
+                          {/* Icon */}
+                        <label>
+                            Icon:
+                            <input
+                                className="w-full border p-2 rounded mt-1"
+                                name="icon"
+                                required
+                                defaultValue={selectedVision?.icon}
+                            />
+                        </label>
 
                         {/* Description */}
                         <label>
@@ -305,7 +348,7 @@ export default function VersionPage() {
                                 name="file"
                                 type="file"
                                 className="w-full border p-2 rounded mt-1"
-                                accept=".png,jpg,jpeg,.gif"
+                               
                             />
                         </label>
 
@@ -369,7 +412,7 @@ export default function VersionPage() {
                             name="file"
                             type="file"
                             className="w-full border p-2 rounded mt-1"
-                            required accept=".png,jpg,jpeg,.gif"
+                            
                         />
                     </label>
 

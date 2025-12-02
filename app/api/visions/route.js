@@ -4,7 +4,7 @@ import { db } from "@/lib/db";   //  REQUIRED
 export async function GET() {
   try {
     const [rows] = await db.query(`
-      SELECT * FROM 4c_visions WHERE deleted_at is null
+      SELECT *,LOWER(title) as ids FROM 4c_visions WHERE deleted_at is null
       
     `);
 
@@ -19,7 +19,7 @@ export async function GET() {
 }
 export async function POST(req) {
   try {
-    const { title, description, image } = await req.json();
+    const { title, icon,description, image } = await req.json();
     if (!title || !description || !image) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -28,8 +28,8 @@ export async function POST(req) {
     }
 
     const [result] = await db.query(
-      "INSERT INTO 4c_visions (title, description, image) VALUES (?, ?, ?)",
-      [title, description, image]
+      "INSERT INTO 4c_visions (title, icon,description, image) VALUES (?, ?,?, ?)",
+      [title, icon,description, image]
     );
 
     return NextResponse.json({

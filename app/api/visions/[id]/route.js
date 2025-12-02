@@ -22,11 +22,11 @@ export async function PUT(req, content) {
     const params = await content.params;
      const id = params.id;
     const body = await req.json();
-    const { title, description, image, status } = body;
+    const { title, icon,description, image, status } = body;
 
     await db.query(
-      "UPDATE 4c_visions SET title=?, description=?, image=?, status=? WHERE id=?",
-      [title, description, image, status, id]
+      "UPDATE 4c_visions SET title=?,icon=?, description=?, image=?, status=? WHERE id=?",
+      [title,icon, description, image, status, id]
     );
 
     return NextResponse.json({ message: "Vision updated successfully" });

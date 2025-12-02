@@ -21,6 +21,7 @@ interface Coord {
 export default function SectionVisions() {
   const [activeSection, setActiveSection] = useState<VisionId | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const [visionData,setVision]= useState([]);
 
   const [circleCoords, setCircleCoords] = useState<Coord[]>([]);
   const pipeRefs = useRef<(SVGPathElement | null)[]>([]);
@@ -28,44 +29,44 @@ export default function SectionVisions() {
   // --------------------------
   // Vision Data
   // --------------------------
-  const visionData: VisionItem[] = [
-    {
-      id: "climate",
-      title: "CLIMATE",
-      icon: Leaf,
-      image:
-        "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
-      description:
-        "Advocating green living, clean air, and ecosystem conservation through eco-tourism and tree plantation.",
-    },
-    {
-      id: "community",
-      title: "COMMUNITY",
-      icon: Users,
-      image:
-        "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=300&fit=crop",
-      description:
-        "Promoting rural empowerment, health, education, and youth development.",
-    },
-    {
-      id: "culture",
-      title: "CULTURE",
-      icon: Globe,
-      image:
-        "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop",
-      description:
-        "Reviving Indian traditions through arts, crafts, cuisines, festivals, and interfaith dialogue.",
-    },
-    {
-      id: "cooperation",
-      title: "COOPERATION",
-      icon: Handshake,
-      image:
-        "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop",
-      description:
-        "Strengthening global harmony through multi-cultural exchanges and international partnerships.",
-    },
-  ];
+  // const visionData: VisionItem[] = [
+  //   {
+  //     id: "climate",
+  //     title: "CLIMATE",
+  //     icon: Leaf,
+  //     image:
+  //       "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop",
+  //     description:
+  //       "Advocating green living, clean air, and ecosystem conservation through eco-tourism and tree plantation.",
+  //   },
+  //   {
+  //     id: "community",
+  //     title: "COMMUNITY",
+  //     icon: Users,
+  //     image:
+  //       "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&h=300&fit=crop",
+  //     description:
+  //       "Promoting rural empowerment, health, education, and youth development.",
+  //   },
+  //   {
+  //     id: "culture",
+  //     title: "CULTURE",
+  //     icon: Globe,
+  //     image:
+  //       "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=300&fit=crop",
+  //     description:
+  //       "Reviving Indian traditions through arts, crafts, cuisines, festivals, and interfaith dialogue.",
+  //   },
+  //   {
+  //     id: "cooperation",
+  //     title: "COOPERATION",
+  //     icon: Handshake,
+  //     image:
+  //       "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=300&fit=crop",
+  //     description:
+  //       "Strengthening global harmony through multi-cultural exchanges and international partnerships.",
+  //   },
+  // ];
 
   // --------------------------
   // Click Handler
@@ -93,11 +94,20 @@ export default function SectionVisions() {
   };
 
   useEffect(() => {
+    loadVision();
     calculateCircleCoords();
     window.addEventListener("resize", calculateCircleCoords);
     return () => window.removeEventListener("resize", calculateCircleCoords);
   }, []);
-
+   const loadVision = async()=>{
+    try {
+            const res = await fetch("/api/visions", { cache: "no-store" }); // your API endpoint
+            const data = await res.json();
+            setVision(data);
+        } finally {
+        }
+   }
+   console.log(visionData)
   // --------------------------
   // Liquid animation
   // --------------------------
@@ -205,30 +215,30 @@ export default function SectionVisions() {
               );
             })}
           </svg>
-
+ 
           {/* Circles */}
           {visionData.map((item) => (
             <div
-              key={item.id}
+              key={item.ids}
               className="relative z-10 flex justify-center my-4 lg:my-0 lg:flex-1"
             >
               <button
-                onClick={() => handleCircleClick(item.id)}
+                onClick={() => handleCircleClick(item.ids)}
                 className="circle-btn relative transition-all duration-500 ease-out"
               >
                 <div
                   className={`w-36 h-36 sm:w-44 sm:h-44 rounded-full border-4 ${
-                    activeSection === item.id
+                    activeSection === item.ids
                       ? "border-blue-400 shadow-2xl"
                       : "border-dashed border-gray-300 shadow-lg"
                   } flex items-center justify-center bg-white transition-all duration-500 cursor-pointer ${
-                    activeSection === item.id ? "animate-pulse-slow" : ""
+                    activeSection === item.ids ? "animate-pulse-slow" : ""
                   }`}
                 >
                   <div className="text-center">
                     <div
                       className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mx-auto mb-2 transition-all duration-500 ${
-                        activeSection === item.id
+                        activeSection === item.ids
                           ? "bg-blue-500 scale-110"
                           : "bg-blue-400"
                       }`}
@@ -238,7 +248,7 @@ export default function SectionVisions() {
 
                     <h3
                       className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
-                        activeSection === item.id
+                        activeSection === item.ids
                           ? "text-blue-400"
                           : "text-gray-800"
                       }`}
@@ -248,7 +258,7 @@ export default function SectionVisions() {
                   </div>
                 </div>
 
-                {activeSection === item.id && (
+                {activeSection === item.ids && (
                   <div className="absolute inset-0 rounded-full border-4 border-blue-400 animate-ping opacity-75"></div>
                 )}
               </button>
