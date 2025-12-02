@@ -4,7 +4,7 @@ import { db } from "@/lib/db";   //  REQUIRED
 export async function GET() {
   try {
     const [rows] = await db.query(`
-      SELECT * FROM letter_from WHERE status=1 AND deleted_at is null
+      SELECT *,letter_from as name,remarks as title,letter_image as certificateUrl FROM letter_from WHERE status=1 AND deleted_at is null
       
     `);
 

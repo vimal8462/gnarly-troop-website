@@ -22,16 +22,17 @@ export default function SectionMinisterLetter({
 }: Props) {
   const FALLBACK = "/mnt/data/HorizontalBorder.png";
 
-  const items = cards; // 🔥 No more defaultCards logic
+  //const items = cards; // 🔥 No more defaultCards logic
 
   // Refs & State
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [index, setIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-
+ const [items,setItem] =useState([]);
   // Measure width
   useEffect(() => {
+    loadItems();
     function measure() {
       const el = viewportRef.current;
       if (!el) return;
@@ -39,7 +40,7 @@ export default function SectionMinisterLetter({
       const width = Math.max(Math.floor(rect.width), 320);
       setViewportWidth(width);
     }
-
+    
     measure();
 
     let ro: ResizeObserver | null = null;
@@ -53,8 +54,17 @@ export default function SectionMinisterLetter({
       if (ro) ro.disconnect();
       window.removeEventListener("resize", measure);
     };
+    
   }, []);
-
+ const loadItems = async()=>{
+       try {
+            const res = await fetch("/api/letters", { cache: "no-store" }); // your API endpoint
+            const data = await res.json();
+            setItem(data);
+        } finally {
+        }
+    }
+    console.log(items)
   // Geometry
   const GAP = 20;
   const MAIN_RATIO = 0.54;
