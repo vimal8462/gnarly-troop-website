@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";   //  REQUIRED
-
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const [rows] = await db.query(`

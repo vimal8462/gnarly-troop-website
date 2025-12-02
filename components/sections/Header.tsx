@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/app/headers.module.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type MenuItem = {
   id: string;

@@ -4,16 +4,21 @@ import { useState, useEffect } from "react";
 import { EditIcon, DeleteIcon, AddIcon } from "@/components/Icons";
 import { Modal } from "@/components/Modal";
 
-export default function UsersPage() {
-    const [users, setUsers] = useState([]);
 
-    const [selectedUser, setSelectedUser] = useState<any>(null);
+export default function TeamPage() {
+    const [teams, setTeams] = useState([]);
+
+    const [selectedTeam, setSelectedTeam] = useState<any>(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [addModal, setAddModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // show 5 rows per page
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     const openDeleteModal = (user: any) => {
-        setSelectedUser(user);
+        setSelectedTeam(user);
         setDeleteModal(true);
     };
     const openAddModal = () => {
@@ -22,56 +27,60 @@ export default function UsersPage() {
     const closeAddModal = () => {
         setAddModal(false);
     };
-    const addNewUser = async (e: any) => {
+    const addNewTeam = async (e: any) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
         const name = formData.get("name") as string;
-        const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
-        const confirmPassword = formData.get("confirmPassword") as string;
+        const position = formData.get("position") as string;
+        const file = formData.get("file") as File;
         const status = formData.get("status") as string;
 
-        const emailExists = users.some(
-            (u) => u.email.toLowerCase() === email.toLowerCase()
-        );
 
-        if (emailExists) {
-            alert("Email already exists!");
-            return;
-        }
-        if (password.length == 0) {
-            alert("Password must be required!");
-            return;
-        }
-        if (confirmPassword.length == 0) {
-            alert("confirm password must be required!");
-            return;
-        }
-        if (password.length < 8) {
-            alert("Password must be at least 8 characters long!");
-            return;
-        }
-        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
 
-        if (!specialCharPattern.test(password)) {
-            alert("Password must contain at least one special character!");
+        if (name.length === 0) {
+            alert("Name is required!");
             return;
         }
-        if (password !== confirmPassword) {
-            alert("Password and Confirm Password do not match!");
+
+        if (position.length === 0) {
+            alert("Position is required!");
             return;
         }
-        const newUser = {
-            id: users.length + 1,
-            name,
-            email,
-            status,
-        };
-        // Send to API
-        const res = await fetch("/api/users", {
+
+        if (!file || file.size === 0) {
+            alert("Image file is required!");
+            return;
+        }
+        if (file) {
+            const allowed = ["jpg", "jpeg", "png", "gif"];
+
+            const ext = file.name.split(".").pop()?.toLowerCase();
+
+            if (!allowed.includes(ext || "")) {
+                alert("Invalid file type! Only JPG, PNG, GIF,JPEG allowed.");
+                return;
+            }
+        }
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+        const uploadRes = await fetch("/api/upload", {
             method: "POST",
-            body: JSON.stringify({ name, email, password, status }),
+            body: uploadData,
+        });
+
+        const uploadJson = await uploadRes.json();
+        if (!uploadRes.ok) {
+            alert(uploadJson.error || "File upload failed");
+            return;
+        }
+
+        const imageUrl = uploadJson.path;
+
+        // Send to API
+        const res = await fetch("/api/teams", {
+            method: "POST",
+            body: JSON.stringify({ name, position, imageUrl, status }),
         });
 
         const data = await res.json();
@@ -81,41 +90,65 @@ export default function UsersPage() {
             return;
         }
 
-        alert("User added successfully!");
-
-        setUsers([...users, newUser]);
+        alert("Team added successfully!");
+        loadteams();
         setAddModal(false); // close modal
     };
     const updateUser = async (e: any) => {
         e.preventDefault();
 
-        const form = new FormData(e.target);
+        const formData = new FormData(e.target);
 
-        const name = form.get("name") as string;
-        const email = form.get("email") as string;
-        const status = form.get("status") as string;
-        const password = form.get("password") as string; // optional
-        const confirmPassword = form.get("confirmPassword") as string;
+        const name = formData.get("name") as string;
+        const position = formData.get("position") as string;
+        const file = formData.get("file") as File;
+        const status = formData.get("status") as string;
 
-        if (password.length !==0) {
-        if (password.length < 8) {
-            alert("Password must be at least 8 characters long!");
+
+
+        if (name.length === 0) {
+            alert("Name is required!");
             return;
         }
-        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
 
-        if (!specialCharPattern.test(password)) {
-            alert("Password must contain at least one special character!");
+        if (position.length === 0) {
+            alert("Position is required!");
             return;
         }
-        if (password !== confirmPassword) {
-            alert("Password and Confirm Password do not match!");
-            return;
+        let imageUrl = selectedTeam.image;
+
+        if (file && file.size > 0) {
+
+            const allowed = ["jpg", "jpeg", "png", "gif"];
+
+            const ext = file.name.split(".").pop()?.toLowerCase();
+
+            if (!allowed.includes(ext || "")) {
+                alert("Invalid file type! Only JPG, PNG, GIF,JPEG allowed.");
+                return;
+            }
+
+            const uploadData = new FormData();
+            uploadData.append("file", file);
+
+            const uploadRes = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+
+            const uploadJson = await uploadRes.json();
+
+            if (!uploadRes.ok) {
+                alert(uploadJson.error || "File upload failed");
+                return;
+            }
+
+            // Replace with newly uploaded image
+            imageUrl = uploadJson.path;
         }
-    }
-        const res = await fetch(`/api/users/${selectedUser.id}`, {
+        const res = await fetch(`/api/teams/${selectedTeam.id}`, {
             method: "PUT",
-            body: JSON.stringify({ name, email, status, password }),
+            body: JSON.stringify({ name, position, imageUrl, status }),
         });
 
         const data = await res.json();
@@ -128,30 +161,34 @@ export default function UsersPage() {
         alert(data.message);
 
         // Update UI
-        loadUsers();
+        loadteams();
 
         setEditModal(false);
     };
 
     useEffect(() => {
-        loadUsers();
+        loadteams();
     }, []);
+    const currentTeams = teams.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(teams.length / itemsPerPage);
+
     const openEditModal = (user: any) => {
-        setSelectedUser(user);
+        setSelectedTeam(user);
         setEditModal(true);
     };
-    const loadUsers = async () => {
+    const loadteams = async () => {
         try {
-            const res = await fetch("/api/users", { cache: "no-store" }); // your API endpoint
+            const res = await fetch("/api/teams", { cache: "no-store" }); // your API endpoint
             const data = await res.json();
-            setUsers(data);
+            setTeams(data);
         } finally {
         }
     };
     const deleteUser = async () => {
-        if (!selectedUser) return;
+        if (!selectedTeam) return;
 
-        const res = await fetch(`/api/users/${selectedUser.id}`, {
+        const res = await fetch(`/api/teams/${selectedTeam.id}`, {
             method: "DELETE",
         });
         const json = await res.json();
@@ -162,19 +199,19 @@ export default function UsersPage() {
         }
 
         // Remove from UI list
-        setUsers(users.filter(u => u.id !== selectedUser.id));
+        setTeams(teams.filter(u => u.id !== selectedTeam.id));
         setDeleteModal(false);
     };
 
     return (
         <div>
-            <h1 className="text-2xl font-semibold mb-6">Users</h1>
+            <h1 className="text-2xl font-semibold mb-6">teams</h1>
             <button
                 onClick={() => openAddModal()}
                 className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
             >
                 <AddIcon />
-                Add User
+                Add Team
             </button>
             <div className="overflow-x-auto">
                 <table className="w-full bg-white rounded-lg shadow">
@@ -182,40 +219,71 @@ export default function UsersPage() {
                         <tr>
                             <th className="p-3 text-left">ID</th>
                             <th className="p-3 text-left">Name</th>
-                            <th className="p-3 text-left">Email</th>
+                            <th className="p-3 text-left">Position</th>
+                            <th className="p-3 text-left">Image</th>
                             <th className="p-3 text-left">Status</th>
                             <th className="p-3 text-center">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id} className="border-b hover:bg-gray-50">
-                                <td className="p-3">{user.id}</td>
-                                <td className="p-3">{user.name}</td>
-                                <td className="p-3">{user.email}</td>
+                        {teams.map((team) => (
+                            <tr key={team.id} className="border-b hover:bg-gray-50">
+                                <td className="p-3">{team.id}</td>
+                                <td className="p-3">{team.name}</td>
+                                <td className="p-3">{team.role}</td>
+                                <td className="p-3"><img src={team.img} width="100" height="100" /></td>
                                 <td className="p-3">
                                     <span className={`px-3 py-1 rounded text-white text-sm capitalize
-                    ${user.status === 1 ? "bg-green-600" : "bg-red-500"}
+                    ${team.status === 1 ? "bg-green-600" : "bg-red-500"}
                   `}>
-                                        {user.status === 1 ? 'Active' : 'Inactive'}
+                                        {team.status === 1 ? 'Active' : 'Inactive'}
                                     </span>
                                 </td>
                                 <td className="p-3 flex gap-4 justify-center">
-                                    <span onClick={() => openEditModal(user)}><EditIcon /></span>
-                                    <span onClick={() => openDeleteModal(user)}><DeleteIcon /></span>
+                                    <span onClick={() => openEditModal(team)}><EditIcon /></span>
+                                    <span onClick={() => openDeleteModal(team)}><DeleteIcon /></span>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className="flex justify-center mt-4 gap-2">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className="px-3 py-1 border rounded disabled:opacity-40"
+                    >
+                        Prev
+                    </button>
+
+                    {[...Array(totalPages)].map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => setCurrentPage(i + 1)}
+                            className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-blue-600 text-white" : ""
+                                }`}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className="px-3 py-1 border rounded disabled:opacity-40"
+                    >
+                        Next
+                    </button>
+                </div>
+
             </div>
 
             {/* Delete Modal */}
             <Modal isOpen={deleteModal} close={() => setDeleteModal(false)} title="Delete Vision">
                 <p>
                     Are you sure you want to delete
-                    <b className="ml-1">{selectedUser?.title}</b>?
+                    <b className="ml-1">{selectedTeam?.title}</b>?
                 </p>
 
                 <div className="flex justify-end gap-3 mt-5">
@@ -243,40 +311,33 @@ export default function UsersPage() {
                             Name:
                             <input
                                 className="w-full border p-2 rounded mt-1"
-                                defaultValue={selectedUser?.name} name="name"
+                                defaultValue={selectedTeam?.name} name="name"
+
                             />
-                           
+
                         </label>
 
                         <label>
-                            Email:
+                            Postition:
                             <input
+                                name="position"
+                                type="text"
                                 className="w-full border p-2 rounded mt-1"
-                                defaultValue={selectedUser?.email} name="email"
+                                placeholder="Enter position"
+                                defaultValue={selectedTeam?.position_name}
                             />
                         </label>
                         <label>
-                            Password:
+                            File:
                             <input
-                                name="password"
-                                type="password"
+                                name="file"
+                                type="file" accept=".jpeg, .jpg, .gif, .png"
                                 className="w-full border p-2 rounded mt-1"
-                                placeholder="Enter password"
-                                
-                            />
-                        </label>
-                        <label>
-                            ConfirmPassword:
-                            <input
-                                name="confirmPassword"
-                                type="password"
-                                className="w-full border p-2 rounded mt-1"
-                                placeholder="Enter confirm password"
-                                
+
                             />
                         </label>
                         <label>Status:</label>
-                        <select className="border p-2 rounded" defaultValue={selectedUser?.status} name="status">
+                        <select className="border p-2 rounded" defaultValue={selectedTeam?.status} name="status">
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
@@ -293,7 +354,7 @@ export default function UsersPage() {
 
             {/* Add User Modal */}
             <Modal isOpen={addModal} close={closeAddModal} title="Add New User">
-                <form onSubmit={addNewUser} className="flex flex-col gap-4">
+                <form onSubmit={addNewTeam} className="flex flex-col gap-4">
 
                     <label>
                         Name:
@@ -306,32 +367,21 @@ export default function UsersPage() {
                     </label>
 
                     <label>
-                        Email:
+                        Postition:
                         <input
-                            name="email"
-                            type="email"
+                            name="position"
+                            type="text"
                             className="w-full border p-2 rounded mt-1"
-                            placeholder="Enter email"
+                            placeholder="Enter position"
                             required
                         />
                     </label>
                     <label>
-                        Password:
+                        File:
                         <input
-                            name="password"
-                            type="password"
+                            name="file"
+                            type="file" accept=".jpeg, .jpg, .gif, .png"
                             className="w-full border p-2 rounded mt-1"
-                            placeholder="Enter password"
-                            required
-                        />
-                    </label>
-                    <label>
-                        ConfirmPassword:
-                        <input
-                            name="confirmPassword"
-                            type="password"
-                            className="w-full border p-2 rounded mt-1"
-                            placeholder="Enter confirm password"
                             required
                         />
                     </label>
@@ -357,7 +407,7 @@ export default function UsersPage() {
                             type="submit"
                             className="px-4 py-2 bg-green-600 text-white rounded"
                         >
-                            Add User
+                            Add Team
                         </button>
                     </div>
 

@@ -1,3 +1,4 @@
+"use client"
 // app/team/page.jsx
 // import Image from "next/image";
 // import Link from "next/link";
@@ -5,8 +6,21 @@ import styles from "@/app/team/Team.module.css";
 
 import leaders from "@/app/team/leaders-data";
 import members from "@/app/team/members-data";
+import { useEffect, useState } from "react";
 
 export default function TeamPage() {
+  const [leaders,setLeaders]=useState([]);
+  useEffect(()=>{
+    loadLeaders()
+  })
+  const loadLeaders = async()=>{
+    try {
+            const res = await fetch("/api/teams", { cache: "no-store" }); // your API endpoint
+            const data = await res.json();
+            setLeaders(data);
+        } finally {
+        }
+  }
   return (
     <main className={styles.page}>
       <div className={styles.container}>
@@ -64,7 +78,7 @@ export default function TeamPage() {
           <h2 className={styles.sectionTitle}>Gnarly Global Leadership</h2>
 
           <div className={styles.grid}>
-            {leaders.map((p) => (
+            {leaders.filter((p) => p.status === 1).map((p) => (
               <article key={p.id} className={styles.card}>
                 <h4>{p.role}</h4>
                 <div className={styles.imgWrap}>

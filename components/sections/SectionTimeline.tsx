@@ -1,3 +1,13 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+type TimelineItem = {
+  year: number;
+  country: string;
+  city: string;
+  details: string;
+};
 export default function Timeline() {
   const [selected, setSelected] = useState<TimelineItem | null>(null);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
@@ -8,7 +18,7 @@ export default function Timeline() {
   useEffect(() => {
     async function getTimeline() {
       try {
-        const res = await fetch("/api/timeline");
+        const res = await fetch("/api/timelines");
         const data = await res.json();
         setTimeline(data);
       } catch (err) {

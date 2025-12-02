@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { EditIcon, DeleteIcon, AddIcon } from "@/components/Icons";
 import { Modal } from "@/components/Modal";
 
-export default function LetterPage() {
-    const [letters, setLetter] = useState([]);
+export default function PartnerPage() {
+    const [partners, setPartner] = useState([]);
 
     const [selectedLetter, setSelectedLetter] = useState<any>(null);
     const [deleteModal, setDeleteModal] = useState(false);
@@ -22,7 +22,7 @@ export default function LetterPage() {
     const closeAddModal = () => {
         setAddModal(false);
     };
-    const addNewLetter = async (e: any) => {
+    const addNewPartner = async (e: any) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
@@ -101,7 +101,7 @@ export default function LetterPage() {
         }
         const imageUrl1 = uploadJson1.path;
 
-        const saveRes = await fetch("/api/letters", {
+        const saveRes = await fetch("/api/partners", {
             method: "POST",
             body: JSON.stringify({
                 letter_from,
@@ -120,8 +120,8 @@ export default function LetterPage() {
         }
 
 
-        const newLetter = {
-            id: saveJson.id ?? letters.length + 1, // from DB or fallback
+        const newPartner = {
+            id: saveJson.id ?? partners.length + 1, // from DB or fallback
             letter_from,
             remarks,
             image: imageUrl,
@@ -218,7 +218,7 @@ export default function LetterPage() {
         }
 
         // === Save updated vision ===
-        const saveRes = await fetch(`/api/letters/${selectedLetter.id}`, {
+        const saveRes = await fetch(`/api/partners/${selectedLetter.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -253,16 +253,16 @@ export default function LetterPage() {
     };
     const loadLetter = async () => {
         try {
-            const res = await fetch("/api/letters"); // your API endpoint
+            const res = await fetch("/api/partners"); // your API endpoint
             const data = await res.json();
-            setLetter(data);
+            setPartner(data);
         } finally {
         }
     };
     const deleteLetter = async () => {
         if (!selectedLetter) return;
 
-        const res = await fetch(`/api/letters/${selectedLetter.id}`, {
+        const res = await fetch(`/api/partners/${selectedLetter.id}`, {
             method: "DELETE",
         });
 
@@ -274,7 +274,7 @@ export default function LetterPage() {
         }
 
         // Remove from UI list
-        setLetter(letters.filter(v => v.id !== selectedLetter.id));
+        setPartner(partners.filter(v => v.id !== selectedLetter.id));
 
         setDeleteModal(false);
     };
@@ -282,7 +282,7 @@ export default function LetterPage() {
 
     return (
         <div>
-            <h1 className="text-2xl font-semibold mb-6">Letters</h1>
+            <h1 className="text-2xl font-semibold mb-6">partners</h1>
             <button
                 onClick={() => openAddModal()}
                 className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -305,7 +305,7 @@ export default function LetterPage() {
                     </thead>
 
                     <tbody>
-                        {letters.map((letter) => (
+                        {partners.map((letter) => (
                             <tr key={letter.id} className="border-b hover:bg-gray-50">
                                 <td className="p-3">{letter.id}</td>
                                 <td className="p-3">{letter.letter_from}</td>
@@ -400,7 +400,7 @@ export default function LetterPage() {
                                 name="letter"
                                 type="file"
                                 className="w-full border p-2 rounded mt-1"
-
+                                accept=".png,jpg,jpeg,.gif"
                             />
                         </label>
 
@@ -439,7 +439,7 @@ export default function LetterPage() {
 
             {/* Add User Modal */}
             <Modal isOpen={addModal} close={closeAddModal} title="Add New Letter">
-                <form onSubmit={addNewLetter} className="flex flex-col gap-4">
+                <form onSubmit={addNewPartner} className="flex flex-col gap-4">
 
                     <label>
                         Letter From:
