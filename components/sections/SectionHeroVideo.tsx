@@ -113,7 +113,7 @@ export default function SectionHeroVideo({
           playsInline
           muted={muted}
           loop
-          poster={founderImg}
+          // poster={founderImg}
           preload="metadata"
         >
           <source src={videoSrc} type="video/mp4" />

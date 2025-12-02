@@ -14,7 +14,7 @@ type MenuItem = {
 const MENU: MenuItem[] = [
   { id: "home", label: "Home", url: "/" },
   { id: "about", label: "About", url: "/#sectionAbout" },
-  { id: "team", label: "Team", url: "/team" },
+  { id: "team", label: "Team", url: "/team2" },
   { id: "timeline", label: "Timeline", url: "/#sectionTimelines" },
   { id: "visions", label: "Visions", target: "/#sectionVisions" },
   { id: "gallery", label: "Gallery", url: "/#sectionGallery" },

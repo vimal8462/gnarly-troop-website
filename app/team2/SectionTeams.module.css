@@ -1,0 +1,197 @@
+.page {
+  padding-top: 50px;
+  padding-left: 200px;
+  padding-right: 200px;
+  background: #f8f9fa;
+  /* font-family: system-ui, sans-serif; */
+}
+
+.wrapper {
+  display: grid;
+  gap: 40px;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+}
+
+.heading {
+  /* font-size: 3.75rem; */
+  font-size: clamp(2rem, 0.6452rem + 4.5161vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: var(--font-black);
+}
+
+.desc {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.separator {
+  margin: 25px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.subHeading {
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.searchBtn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #2b7cff;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Team Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 35px;
+}
+
+.card {
+  background: #fff;
+  padding-bottom: 20px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.personName {
+  margin-top: 15px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.personRole {
+  font-size: 22px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.personDesc {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Footer */
+.footerLine {
+  margin: 40px 0;
+}
+
+.footerSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 30px;
+}
+
+.footerSection h4 {
+  margin-bottom: 10px;
+}
+
+.footerSection a {
+  color: #2b7cff;
+}
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.disabledLink {
+  pointer-events: none;
+  /* opacity: 0.5; */
+  cursor: default;
+}
+
+/* MOBILE VIEW — rearrange team card layout */
+@media (max-width: 768px) {
+  .page {
+    /* This overrides the desktop padding on screens smaller than 768px */
+    padding: 20px;
+  }
+
+  /* Card becomes row layout */
+  .card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+
+  /* LEFT SIDE (Text area) */
+  .cardText {
+    flex: 1;
+  }
+
+  .personName {
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .personRole {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  /* RIGHT SIDE (Image) */
+  .imageWrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Separator under each card */
+  .card::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #ddd;
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+  }
+
+  /* Makes grid behave as stacked list */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
