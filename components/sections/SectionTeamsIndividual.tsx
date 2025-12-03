@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import styles from "@/app/team2/SectionTeamsIndividual.module.css";
 
 export interface Person {

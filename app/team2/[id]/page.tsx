@@ -1,5 +1,5 @@
 // app/team2/[id]/page.tsx
-import React from "react";
+import React, { JSX } from "react";
 import SectionTeamsIndividual, {
   Person,
 } from "@/components/sections/SectionTeamsIndividual";
