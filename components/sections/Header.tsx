@@ -19,6 +19,7 @@ const MENU: MenuItem[] = [
   { id: "visions", label: "Visions", target: "/#sectionVisions" },
   { id: "gallery", label: "Gallery", url: "/#sectionGallery" },
   { id: "contact", label: "Contact", url: "/#sectionContact" },
+  { id: "collaboration", label: "Collaboration", url: "/collaboration" },
 ];
 
 export default function Header() {
