@@ -107,10 +107,7 @@ export default function SectionVisions() {
         } finally {
         }
    }
-   console.log(visionData)
-  // --------------------------
-  // Liquid animation
-  // --------------------------
+
   useEffect(() => {
     let animationFrame: number;
 
@@ -218,6 +215,7 @@ export default function SectionVisions() {
  
           {/* Circles */}
           {visionData.map((item) => (
+            
             <div
               key={item.ids}
               className="relative z-10 flex justify-center my-4 lg:my-0 lg:flex-1"
@@ -243,6 +241,7 @@ export default function SectionVisions() {
                           : "bg-blue-400"
                       }`}
                     >
+                      
                       <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                     </div>
 
@@ -269,6 +268,7 @@ export default function SectionVisions() {
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {visionData.map((item) => (
+            
             <div
               key={item.title}
               className={`bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-500 ${

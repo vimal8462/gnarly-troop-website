@@ -30,7 +30,6 @@ export default function Timeline() {
 
     getTimeline();
   }, []); // ← important
-
   // Now UI logic goes OUTSIDE useEffect:
   const upcomingEvents = timeline.filter((e) => e.year > currentYear);
   const recentUpcomingYear = upcomingEvents.length

@@ -34,6 +34,7 @@ export default function AdminSidebar({ isOpen, closeSidebar }: SidebarProps) {
           <a href="/admin/visions" className="hover:text-gray-300">4C's Vision</a>
           <a href="/admin/letters" className="hover:text-gray-300">Letters</a>
           <a href="/admin/teams" className="hover:text-gray-300">Teams</a>
+          <a href="/admin/ministry" className="hover:text-gray-300">Ministry</a>
           <a href="/admin/settings" className="hover:text-gray-300">Settings</a>
         </nav>
       </aside>
