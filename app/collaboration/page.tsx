@@ -1,12 +1,12 @@
-import TeamSection from "@/components/sections/TeamRejected";
+import CollaborationSection from "@/components/sections/Collaboration";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/SectionFooter";
 
-export default function TeamPage() {
+export default function CollaborationPage() {
   return (
     <>
       <Header />
-      <TeamSection />
+      <CollaborationSection />
       <Footer />
     </>
   );

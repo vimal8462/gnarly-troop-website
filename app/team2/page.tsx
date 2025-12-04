@@ -1,4 +1,4 @@
-import TeamSection from "@/components/sections/TeamRejected";
+import SectionTeams from "@/components/sections/SectionTeams";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/SectionFooter";
 
@@ -6,7 +6,7 @@ export default function TeamPage() {
   return (
     <>
       <Header />
-      <TeamSection />
+      <SectionTeams />
       <Footer />
     </>
   );
