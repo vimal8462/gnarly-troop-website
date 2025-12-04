@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import styles from "@/app/team2/SectionTeams.module.css";
 
 // single merged data file
-import members from "@/app/team/members-data";
+import members from "@/app/team/members-data.js";
 
 interface Person {
   id: number | string;
@@ -41,14 +41,14 @@ export default function SectionTeams() {
   // split and sort using useMemo to avoid re-computation on each render
   const leaders = useMemo(() => {
     return (members as Person[])
-      .filter((p) => p.dataType === "leaders-data")
+      .filter((p) => p.dataType === "global advisory and governing board")
       .slice() // copy before sort
       .sort((a, b) => getPriority(a) - getPriority(b));
   }, []);
 
   const membersList = useMemo(() => {
     return (members as Person[])
-      .filter((p) => p.dataType === "members-data")
+      .filter((p) => p.dataType === "executive leadership committee members")
       .slice()
       .sort((a, b) => getPriority(a) - getPriority(b));
   }, []);
@@ -76,12 +76,12 @@ export default function SectionTeams() {
       </div>
 
       {/* ========================================================= */}
-      {/* === 1. GNARLY GLOBAL LEADERSHIP ========================== */}
+      {/* === 1. Global Advisory and Governing Board ========================== */}
       {/* ========================================================= */}
       <section aria-labelledby="gnarly-global-leadership">
         <hr className={styles.separator} />
         <h2 id="gnarly-global-leadership" className={styles.subHeading}>
-          Gnarly Global Leadership
+          Global Advisory and Governing Board
         </h2>
 
         <div className={styles.wrapper2}>
@@ -123,12 +123,12 @@ export default function SectionTeams() {
       </section>
 
       {/* ========================================================= */}
-      {/* === 2. EMPOWERING NATIONAL PRIDE — MATCH SECTION 1 ====== */}
+      {/* === 2. EXECUTIVE LEADERSHIP COMMITTEE MEMBERS — MATCH SECTION 1 ====== */}
       {/* ========================================================= */}
       <section aria-labelledby="empowering-national-pride">
         <hr className={styles.separator} />
         <h2 id="empowering-national-pride" className={styles.subHeading}>
-          Empowering National Pride with the Gnarly Troop
+          EXECUTIVE LEADERSHIP COMMITTEE MEMBERS
         </h2>
 
         <div className={styles.wrapper2}>
