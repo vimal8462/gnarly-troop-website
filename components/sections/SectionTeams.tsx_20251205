@@ -1,59 +1,54 @@
 // components/SectionTeams.tsx
 import React, { useMemo } from "react";
 import styles from "@/app/team2/SectionTeams.module.css";
+
+// single merged data file
 import members from "@/app/team/members-data.js";
 
-export interface Person {
-  id: string; // <-- string type
+interface Person {
+  id: number | string;
   name: string;
   role?: string;
   img?: string;
   href?: string | null;
-  dataType?: string | null;
-  bio?: string | null;
-  priority?: string | number | null;
+  dataType?: string | null; // "leaders-data" or "members-data"
+  priority?: number | string | null;
   [key: string]: any;
 }
 
 const DEFAULT_HIGH_PRIORITY = 999999;
 
-// Convert priority to number safely
 function getPriority(p: Person): number {
   if (p.priority == null) return DEFAULT_HIGH_PRIORITY;
+  if (typeof p.priority === "number") return p.priority;
   const n = Number(p.priority);
   return Number.isFinite(n) ? n : DEFAULT_HIGH_PRIORITY;
 }
 
-// Build URL using string id
 function resolveHref(p: Person): string {
-  if (p.bio && typeof p.bio === "string" && p.bio.trim() !== "") {
-    return `/team2/${String(p.id)}`;
-  }
+  //   if (p.href && typeof p.href === "string" && p.href.trim() !== "")
+  //     // return p.href;
+  //     return `/team2/${p.id.toString()}`;
+  //     if (p.id != null) return `#${p.id.toString()}`;
+  //     return "#";
+
+  if (p.bio && typeof p.bio === "string" && p.bio.trim() !== "")
+    return `/team2/${p.id.toString()}`;
   return "#";
 }
 
 export default function SectionTeams() {
-  const sectionA = useMemo(() => {
+  // split and sort using useMemo to avoid re-computation on each render
+  const leaders = useMemo(() => {
     return (members as Person[])
       .filter((p) => p.dataType === "global advisory and governing board")
-      .slice()
+      .slice() // copy before sort
       .sort((a, b) => getPriority(a) - getPriority(b));
   }, []);
 
-  const sectionB = useMemo(() => {
+  const membersList = useMemo(() => {
     return (members as Person[])
       .filter((p) => p.dataType === "executive leadership committee members")
-      .slice()
-      .sort((a, b) => getPriority(a) - getPriority(b));
-  }, []);
-
-  const sectionC = useMemo(() => {
-    return (members as Person[])
-      .filter(
-        (p) =>
-          p.dataType ===
-          "gnarly troop council for support & strategic resources"
-      )
       .slice()
       .sort((a, b) => getPriority(a) - getPriority(b));
   }, []);
@@ -80,33 +75,37 @@ export default function SectionTeams() {
         </main>
       </div>
 
-      {/* -------------------------------- */}
-      {/* 1 — GLOBAL ADVISORY AND GOVERNING BOARD */}
-      {/* -------------------------------- */}
-      <section aria-labelledby="section-a">
+      {/* ========================================================= */}
+      {/* === 1. Global Advisory and Governing Board ========================== */}
+      {/* ========================================================= */}
+      <section aria-labelledby="gnarly-global-leadership">
         <hr className={styles.separator} />
-        <h2 id="section-a" className={styles.subHeading}>
-          GLOBAL ADVISORY AND GOVERNING BOARD
+        <h2 id="gnarly-global-leadership" className={styles.subHeading}>
+          Global Advisory and Governing Board
         </h2>
 
         <div className={styles.wrapper2}>
           <div className={styles.grid}>
-            {sectionA.map((p: Person) => (
+            {leaders.map((p: Person, i: number) => (
               <a
-                key={p.id}
+                key={i}
                 href={resolveHref(p)}
                 className={`${styles.cardLink} ${
                   resolveHref(p) === "#" ? styles.disabledLink : ""
                 }`}
+                // allow open in new tab for external links
+                // {...(p.href && p.href.trim() !== ""
+                //   ? { target: "none", rel: "noopener noreferrer" }
+                //   : {})}
               >
                 <article
                   className={styles.card}
                   aria-label={p.name}
-                  id={`team2-${p.id}`}
+                  id={`team2#${p.id}`}
                 >
                   <div className={styles.imageWrapper}>
                     <img
-                      src={p.img || "/placeholder-profile.png"}
+                      src={p.img ?? "/placeholder-profile.png"}
                       alt={p.name}
                       className={styles.image}
                     />
@@ -123,76 +122,37 @@ export default function SectionTeams() {
         </div>
       </section>
 
-      {/* -------------------------------- */}
-      {/* 2 — EXECUTIVE MEMBERS */}
-      {/* -------------------------------- */}
-      <section aria-labelledby="section-b">
+      {/* ========================================================= */}
+      {/* === 2. EXECUTIVE LEADERSHIP COMMITTEE MEMBERS — MATCH SECTION 1 ====== */}
+      {/* ========================================================= */}
+      <section aria-labelledby="empowering-national-pride">
         <hr className={styles.separator} />
-        <h2 id="section-b" className={styles.subHeading}>
+        <h2 id="empowering-national-pride" className={styles.subHeading}>
           EXECUTIVE LEADERSHIP COMMITTEE MEMBERS
         </h2>
 
         <div className={styles.wrapper2}>
           <div className={styles.grid}>
-            {sectionB.map((p: Person) => (
+            {membersList.map((p: Person, i: number) => (
               <a
-                key={p.id}
+                id={`team2#${p.id}`}
+                key={i}
                 href={resolveHref(p)}
                 className={`${styles.cardLink} ${
                   resolveHref(p) === "#" ? styles.disabledLink : ""
                 }`}
+                // {...(p.href && p.href.trim() !== ""
+                //   ? { target: "none", rel: "noopener noreferrer" }
+                //   : {})}
               >
                 <article
                   className={styles.card}
                   aria-label={p.name}
-                  id={`team2-${p.id}`}
+                  id={`team2#${p.id}`}
                 >
                   <div className={styles.imageWrapper}>
                     <img
-                      src={p.img || "/placeholder-profile.png"}
-                      alt={p.name}
-                      className={styles.image}
-                    />
-                  </div>
-
-                  <div className={styles.cardText}>
-                    <h3 className={styles.personName}>{p.name}</h3>
-                    <p className={styles.personRole}>{p.role}</p>
-                  </div>
-                </article>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* -------------------------------- */}
-      {/* 3 — GNARLY TROOP COUNCIL FOR SUPPORT & STRATEGIC RESOURCES */}
-      {/* -------------------------------- */}
-      <section aria-labelledby="section-c">
-        <hr className={styles.separator} />
-        <h2 id="section-c" className={styles.subHeading}>
-          GNARLY TROOP COUNCIL FOR SUPPORT & STRATEGIC RESOURCES
-        </h2>
-
-        <div className={styles.wrapper2}>
-          <div className={styles.grid}>
-            {sectionC.map((p: Person) => (
-              <a
-                key={p.id}
-                href={resolveHref(p)}
-                className={`${styles.cardLink} ${
-                  resolveHref(p) === "#" ? styles.disabledLink : ""
-                }`}
-              >
-                <article
-                  className={styles.card}
-                  aria-label={p.name}
-                  id={`team2-${p.id}`}
-                >
-                  <div className={styles.imageWrapper}>
-                    <img
-                      src={p.img || "/placeholder-profile.png"}
+                      src={p.img ?? "/placeholder-profile.png"}
                       alt={p.name}
                       className={styles.image}
                     />
