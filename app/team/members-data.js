@@ -263,7 +263,7 @@ His esteemed presence, alongside the global leadership of the Gnarly Troop Globa
     id: "C3",
     name: "Shri Anand Sahu Ji",
     role: "Advisor - Gnarly Troop, Exec Chair of Political & Diaspora Diplomacy",
-    img: "https://i.redd.it/h68mdg17af661.png",
+    img: "/images/leadership/Anand Sahu.jpg",
     href: "/team2/C3",
     priority: 3,
     dataType: "gnarly troop council for support & strategic resources",

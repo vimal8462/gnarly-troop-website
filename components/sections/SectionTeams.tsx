@@ -1,3 +1,5 @@
+"use client";
+
 // components/SectionTeams.tsx
 import React, { useMemo } from "react";
 import styles from "@/app/team2/SectionTeams.module.css";
