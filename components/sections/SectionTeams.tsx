@@ -2,8 +2,8 @@
 
 // components/SectionTeams.tsx
 import React, { useMemo } from "react";
-import styles from "@/app/team2/SectionTeams.module.css";
-import members from "@/app/team/members-data.js";
+import styles from "@/app/leadership/SectionTeams.module.css";
+import members from "@/app/leadership/members-data.js";
 
 export interface Person {
   id: string; // <-- string type
@@ -29,7 +29,7 @@ function getPriority(p: Person): number {
 // Build URL using string id
 function resolveHref(p: Person): string {
   if (p.bio && typeof p.bio === "string" && p.bio.trim() !== "") {
-    return `/team2/${String(p.id)}`;
+    return `/leadership/${String(p.id)}`;
   }
   return "#";
 }
@@ -104,7 +104,7 @@ export default function SectionTeams() {
                 <article
                   className={styles.card}
                   aria-label={p.name}
-                  id={`team2-${p.id}`}
+                  id={`leadership-${p.id}`}
                 >
                   <div className={styles.imageWrapper}>
                     <img
@@ -147,7 +147,7 @@ export default function SectionTeams() {
                 <article
                   className={styles.card}
                   aria-label={p.name}
-                  id={`team2-${p.id}`}
+                  id={`leadership-${p.id}`}
                 >
                   <div className={styles.imageWrapper}>
                     <img
@@ -190,7 +190,7 @@ export default function SectionTeams() {
                 <article
                   className={styles.card}
                   aria-label={p.name}
-                  id={`team2-${p.id}`}
+                  id={`leadership-${p.id}`}
                 >
                   <div className={styles.imageWrapper}>
                     <img

@@ -2,7 +2,7 @@ import React, { JSX } from "react";
 import SectionTeamsIndividual, {
   Person,
 } from "@/components/sections/SectionTeamsIndividual";
-import members from "@/app/team/members-data";
+import members from "@/app/leadership/members-data";
 import { notFound } from "next/navigation";
 import Header from "@/components/sections/Header";
 import Footer from "@/components/sections/SectionFooter";

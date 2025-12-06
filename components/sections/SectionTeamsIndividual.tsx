@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "@/app/team2/SectionTeamsIndividual.module.css";
+import styles from "@/app/leadership/SectionTeamsIndividual.module.css";
 
 export interface Person {
   id: string; // <-- always string
@@ -23,7 +23,7 @@ export default function SectionTeamsIndividual({ person }: Props): JSX.Element {
       <nav className={styles.breadcrumb}>
         <a href="/">Home</a>
         <span className={styles.separator}>›</span>
-        <a href={`/team2#${person.id}`}>Teams</a>
+        <a href={`/leadership#${person.id}`}>Teams</a>
         <span className={styles.separator}>›</span>
         <span className={styles.current}>{person.name}</span>
       </nav>
